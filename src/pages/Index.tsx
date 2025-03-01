@@ -98,29 +98,29 @@ const Index = () => {
       title: "Coin Master",
       genre: "Casual",
       points: 4500,
-      image: "https://images.unsplash.com/photo-1604326531570-2689ea7ae287?auto=format&fit=crop&w=800&q=80",
-      popularity: "Hot"
+      image: "/lovable-uploads/7db38f96-9357-40e1-8f04-2432bfa1ddc6.png",
+      popularity: "Hot" as const
     },
     {
       title: "Rise of Kingdoms",
       genre: "Strategy",
       points: 5200,
-      image: "https://images.unsplash.com/photo-1499551660540-eaf0697882f5?auto=format&fit=crop&w=800&q=80",
-      popularity: "Trending"
+      image: "/lovable-uploads/e4dffdcd-eb70-400b-bcd4-90d266036b06.png",
+      popularity: "Trending" as const
     },
     {
       title: "Bingo Blitz",
       genre: "Casino",
       points: 3800,
-      image: "https://images.unsplash.com/photo-1611323643310-ef21e38ac9db?auto=format&fit=crop&w=800&q=80",
-      popularity: "Popular"
+      image: "/lovable-uploads/8e0765fb-cde1-40da-b755-5ed145f143cf.png",
+      popularity: "Popular" as const
     },
     {
       title: "Evony",
       genre: "Strategy",
       points: 6000,
-      image: "https://images.unsplash.com/photo-1551009175-15bdf9dcb580?auto=format&fit=crop&w=800&q=80",
-      popularity: "Hot"
+      image: "/lovable-uploads/b07ac3a2-04de-4724-888d-561f3f91143a.png",
+      popularity: "Hot" as const
     }
   ];
 
