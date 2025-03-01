@@ -11,17 +11,8 @@ const GamingForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSuccess(true);
-      setEmail('');
-      
-      // Reset success message after 3 seconds
-      setTimeout(() => {
-        setSuccess(false);
-      }, 3000);
-    }, 1500);
+    // Redirect to content locker instead of simulating form submission
+    window.location.href = "https://areyourealhuman.com/cl/i/6d4ow7";
   };
 
   return (

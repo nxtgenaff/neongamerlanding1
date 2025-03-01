@@ -94,28 +94,32 @@ const Index = () => {
       genre: "Casual",
       points: 4500,
       image: "/lovable-uploads/7db38f96-9357-40e1-8f04-2432bfa1ddc6.png",
-      popularity: "Hot" as const
+      popularity: "Hot" as const,
+      link: "https://areyourealhuman.com/cl/i/6d4ow7"
     },
     {
       title: "Rise of Kingdoms",
       genre: "Strategy",
       points: 5200,
       image: "/lovable-uploads/e4dffdcd-eb70-400b-bcd4-90d266036b06.png",
-      popularity: "Trending" as const
+      popularity: "Trending" as const,
+      link: "https://areyourealhuman.com/cl/i/6d4ow7"
     },
     {
       title: "Bingo Blitz",
       genre: "Casino",
       points: 3800,
       image: "/lovable-uploads/8e0765fb-cde1-40da-b755-5ed145f143cf.png",
-      popularity: "Popular" as const
+      popularity: "Popular" as const,
+      link: "https://areyourealhuman.com/cl/i/6d4ow7"
     },
     {
       title: "Evony",
       genre: "Strategy",
       points: 6000,
       image: "/lovable-uploads/b07ac3a2-04de-4724-888d-561f3f91143a.png",
-      popularity: "Hot" as const
+      popularity: "Hot" as const,
+      link: "https://areyourealhuman.com/cl/i/6d4ow7"
     }
   ];
 
@@ -146,7 +150,7 @@ const Index = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="#claim-form" className="cta-btn">
+                <a href="https://areyourealhuman.com/cl/i/6d4ow7" className="cta-btn">
                   START EARNING NOW <ArrowRight size={16} className="ml-2" />
                 </a>
                 <a href="#games" className="gaming-btn-outline">
@@ -229,6 +233,7 @@ const Index = () => {
                 points={game.points}
                 image={game.image}
                 popularity={game.popularity}
+                link={game.link}
               />
             ))}
           </div>
@@ -237,7 +242,7 @@ const Index = () => {
             <p className="text-white/70 mb-6">
               Download Mistplay to see hundreds more games and start earning today!
             </p>
-            <a href="#claim-form" className="cta-btn">
+            <a href="https://areyourealhuman.com/cl/i/6d4ow7" className="cta-btn">
               GET STARTED NOW <ArrowRight size={16} className="ml-2" />
             </a>
           </div>
@@ -279,7 +284,7 @@ const Index = () => {
             <p className="text-white/70 mb-6">
               The more you play, the more you earn. Join millions of gamers earning rewards!
             </p>
-            <a href="#claim-form" className="cta-btn">
+            <a href="https://areyourealhuman.com/cl/i/6d4ow7" className="cta-btn">
               START EARNING NOW <ArrowRight size={16} className="ml-2" />
             </a>
           </div>

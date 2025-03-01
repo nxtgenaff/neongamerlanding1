@@ -8,9 +8,10 @@ interface MistplayGameCardProps {
   points: number;
   image: string;
   popularity: 'Hot' | 'Trending' | 'Popular' | 'New';
+  link?: string;
 }
 
-const MistplayGameCard = ({ title, genre, points, image, popularity }: MistplayGameCardProps) => {
+const MistplayGameCard = ({ title, genre, points, image, popularity, link }: MistplayGameCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
   const popularityColors = {
@@ -21,8 +22,9 @@ const MistplayGameCard = ({ title, genre, points, image, popularity }: MistplayG
   };
 
   return (
-    <div 
-      className={`glass-panel transition-all duration-500 border border-white/5 rounded-lg overflow-hidden ${isHovered ? 'shadow-neon-blue transform -translate-y-2' : ''}`}
+    <a 
+      href={link || "#"}
+      className={`glass-panel transition-all duration-500 border border-white/5 rounded-lg overflow-hidden block ${isHovered ? 'shadow-neon-blue transform -translate-y-2' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -55,7 +57,7 @@ const MistplayGameCard = ({ title, genre, points, image, popularity }: MistplayG
           <div className="text-gaming-accent font-bold text-sm">{points} Units</div>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 
