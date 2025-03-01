@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Trophy, Gamepad, Diamond, ArrowRight, Star } from 'lucide-react';
+import { Trophy, Gamepad, Diamond, ArrowRight, Star, Shield } from 'lucide-react';
 import CountdownTimer from '../components/CountdownTimer';
 import RewardCard from '../components/RewardCard';
 import TestimonialCard from '../components/TestimonialCard';
