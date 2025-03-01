@@ -5,6 +5,7 @@ import CountdownTimer from '../components/CountdownTimer';
 import RewardCard from '../components/RewardCard';
 import TestimonialCard from '../components/TestimonialCard';
 import GamingForm from '../components/GamingForm';
+import MistplayGameCard from '../components/MistplayGameCard';
 
 const Index = () => {
   const [showBanner, setShowBanner] = useState(false);
@@ -19,10 +20,10 @@ const Index = () => {
 
     // Show winners notification at random intervals
     const winners = [
-      { name: 'Alex89', prize: 'Legendary Skin' },
-      { name: 'GamerQueen', prize: '5000 Coins' },
-      { name: 'FrostySniper', prize: 'Rare Weapon' },
-      { name: 'EliteGamer22', prize: 'Season Pass' }
+      { name: 'Alex89', prize: '5000 Units' },
+      { name: 'GamerQueen', prize: '$15 Amazon Gift Card' },
+      { name: 'FrostySniper', prize: '$25 PayPal Credit' },
+      { name: 'EliteGamer22', prize: '10000 Units' }
     ];
 
     const winnerInterval = setInterval(() => {
@@ -49,21 +50,21 @@ const Index = () => {
 
   const rewards = [
     {
-      title: "Exclusive Skins",
-      description: "Customize your character with rare skins not available in the store.",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+      title: "Gift Cards",
+      description: "Convert your Mistplay Units to gift cards from Amazon, Google Play, and more.",
+      image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=800&q=80",
       glowColor: "blue" as const
     },
     {
-      title: "5000+ Game Coins",
-      description: "Get a massive boost with in-game currency to purchase premium items.",
-      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+      title: "PayPal Cash",
+      description: "Turn your gaming sessions into real money sent directly to your PayPal account.",
+      image: "https://images.unsplash.com/photo-1580048915913-4f8f5cb481c4?auto=format&fit=crop&w=800&q=80",
       glowColor: "purple" as const
     },
     {
-      title: "Power-Up Bundle",
-      description: "Unlock special abilities and power-ups to dominate your opponents.",
-      image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?auto=format&fit=crop&w=800&q=80", 
+      title: "Premium Units",
+      description: "Earn bonus Units with special offers and promotions for faster rewards.",
+      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80", 
       glowColor: "pink" as const
     }
   ];
@@ -71,24 +72,55 @@ const Index = () => {
   const testimonials = [
     {
       name: "Michael R.",
-      game: "Battle Royale Pro",
+      game: "Coin Master Player",
       avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-      quote: "The exclusive skin pack was insane! My character stands out in every match now!",
+      quote: "I've earned over $50 in Amazon gift cards just playing games I actually enjoy!",
       stars: 5
     },
     {
       name: "Sarah K.",
-      game: "Legendary MMORPG Player",
+      game: "Bingo Blitz Player",
       avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-      quote: "Got the coin bundle instantly. Was able to buy that legendary mount I've been saving for.",
+      quote: "Mistplay is legit! Got my first PayPal cash out within two weeks of playing.",
       stars: 5
     },
     {
       name: "Jason T.",
-      game: "FPS Champion",
+      game: "Rise of Kingdoms Player",
       avatar: "https://randomuser.me/api/portraits/men/55.jpg",
-      quote: "The power-ups gave me a serious edge in ranked matches. Totally worth it!",
+      quote: "I play games anyway, so getting rewarded for it is an awesome bonus!",
       stars: 4
+    }
+  ];
+
+  const mistplayGames = [
+    {
+      title: "Coin Master",
+      genre: "Casual",
+      points: 4500,
+      image: "https://images.unsplash.com/photo-1604326531570-2689ea7ae287?auto=format&fit=crop&w=800&q=80",
+      popularity: "Hot"
+    },
+    {
+      title: "Rise of Kingdoms",
+      genre: "Strategy",
+      points: 5200,
+      image: "https://images.unsplash.com/photo-1499551660540-eaf0697882f5?auto=format&fit=crop&w=800&q=80",
+      popularity: "Trending"
+    },
+    {
+      title: "Bingo Blitz",
+      genre: "Casino",
+      points: 3800,
+      image: "https://images.unsplash.com/photo-1611323643310-ef21e38ac9db?auto=format&fit=crop&w=800&q=80",
+      popularity: "Popular"
+    },
+    {
+      title: "Evony",
+      genre: "Strategy",
+      points: 6000,
+      image: "https://images.unsplash.com/photo-1551009175-15bdf9dcb580?auto=format&fit=crop&w=800&q=80",
+      popularity: "Hot"
     }
   ];
 
@@ -103,16 +135,16 @@ const Index = () => {
             <div className="text-left" data-aos="fade-right">
               <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
                 <p className="text-gaming-blue text-sm font-medium flex items-center">
-                  <Trophy size={14} className="mr-1" /> Limited Time Gaming Offer
+                  <Trophy size={14} className="mr-1" /> Mistplay: Play & Earn
                 </p>
               </div>
               
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white tracking-tight">
-                Claim Your <span className="neon-text">Free In-Game Rewards</span> Now!
+                Get <span className="neon-text">Paid to Play</span> Your Favorite Mobile Games!
               </h1>
               
               <p className="text-lg text-white/80 mb-8 max-w-xl">
-                Unlock exclusive skins, coins, and power-ups that will give you the competitive edge in just a few steps!
+                Turn your gaming time into real rewards! Earn Units as you play and redeem them for gift cards, PayPal cash, and more.
               </p>
               
               <div className="mb-6">
@@ -121,10 +153,10 @@ const Index = () => {
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <a href="#claim-form" className="cta-btn">
-                  GET STARTED NOW <ArrowRight size={16} className="ml-2" />
+                  START EARNING NOW <ArrowRight size={16} className="ml-2" />
                 </a>
-                <a href="#rewards" className="gaming-btn-outline">
-                  VIEW REWARDS
+                <a href="#games" className="gaming-btn-outline">
+                  VIEW GAMES
                 </a>
               </div>
             </div>
@@ -134,13 +166,13 @@ const Index = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-neon-border animate-gradient-flow"></div>
                 <div className="flex items-center mb-6">
                   <Gamepad size={28} className="text-gaming-blue mr-3" />
-                  <h3 className="font-display text-xl font-bold">Game Rewards Showcase</h3>
+                  <h3 className="font-display text-xl font-bold">Mistplay Rewards</h3>
                 </div>
                 
                 <div className="relative h-64 md:h-80 mb-4 overflow-hidden rounded-lg">
                   <img 
-                    src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=800&q=80" 
-                    alt="Gaming Rewards" 
+                    src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=800&q=80" 
+                    alt="Mistplay Rewards" 
                     className="object-cover w-full h-full transition-transform duration-700 ease-in-out hover:scale-105"
                   />
                 </div>
@@ -148,20 +180,19 @@ const Index = () => {
                 <div className="flex items-center justify-between bg-gaming-darker p-3 rounded-lg">
                   <div className="flex items-center">
                     <Diamond size={18} className="text-gaming-accent mr-2" />
-                    <span className="text-sm font-medium">Premium Rewards Pack</span>
+                    <span className="text-sm font-medium">Average Monthly Earnings</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="text-sm line-through text-white/40 mr-2">$49.99</span>
-                    <span className="text-sm font-bold text-gaming-accent">FREE</span>
+                    <span className="text-sm font-bold text-gaming-accent">$15-25</span>
                   </div>
                 </div>
                 
                 <div className="mt-4 text-center">
-                  <p className="text-xs text-white/50 mb-2">Players claiming rewards today</p>
+                  <p className="text-xs text-white/50 mb-2">New users joining today</p>
                   <div className="w-full bg-gaming-darker rounded-full h-2">
                     <div className="bg-gaming-blue h-2 rounded-full w-[78%]"></div>
                   </div>
-                  <p className="text-xs text-white/70 mt-2">Limited slots remaining! <span className="text-gaming-pink">87% claimed</span></p>
+                  <p className="text-xs text-white/70 mt-2">Registration bonus available! <span className="text-gaming-pink">+500 Units</span></p>
                 </div>
               </div>
               
@@ -173,11 +204,55 @@ const Index = () => {
         
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-          <span className="text-white/50 text-sm mb-2">Scroll to see rewards</span>
+          <span className="text-white/50 text-sm mb-2">Scroll to see games</span>
           <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-1">
             <div className="w-1 h-2 bg-white/60 rounded-full animate-bounce"></div>
           </div>
         </div>
+      </section>
+      
+      {/* Games Section */}
+      <section id="games" className="py-20 relative">
+        <div className="container max-w-6xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
+              <p className="text-gaming-blue text-sm font-medium flex items-center justify-center">
+                <Gamepad size={14} className="mr-1" /> Featured Mistplay Games
+              </p>
+            </div>
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              Play These <span className="neon-text">Top Games</span> to Earn More
+            </h2>
+            <p className="text-white/70 max-w-2xl mx-auto">
+              The more you play, the more you earn. Check out these high-earning games on Mistplay
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-4 gap-6">
+            {mistplayGames.map((game, index) => (
+              <MistplayGameCard 
+                key={index}
+                title={game.title}
+                genre={game.genre}
+                points={game.points}
+                image={game.image}
+                popularity={game.popularity}
+              />
+            ))}
+          </div>
+          
+          <div className="mt-16 text-center">
+            <p className="text-white/70 mb-6">
+              Download Mistplay to see hundreds more games and start earning today!
+            </p>
+            <a href="#claim-form" className="cta-btn">
+              GET STARTED NOW <ArrowRight size={16} className="ml-2" />
+            </a>
+          </div>
+        </div>
+        
+        <div className="absolute top-40 -left-40 w-80 h-80 bg-gaming-blue/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 -right-40 w-80 h-80 bg-gaming-purple/5 rounded-full blur-3xl"></div>
       </section>
       
       {/* Rewards Section */}
@@ -186,14 +261,14 @@ const Index = () => {
           <div className="text-center mb-16">
             <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
               <p className="text-gaming-blue text-sm font-medium flex items-center justify-center">
-                <Star size={14} className="mr-1" /> Exclusive Gaming Rewards
+                <Star size={14} className="mr-1" /> Mistplay Rewards
               </p>
             </div>
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Unlock These <span className="neon-text">Epic Rewards</span>
+              Redeem Your <span className="neon-text">Units</span> for Real Rewards
             </h2>
             <p className="text-white/70 max-w-2xl mx-auto">
-              Level up your gaming experience with these exclusive items that will give you the competitive edge
+              Convert the Units you earn through gameplay into valuable rewards you'll actually use
             </p>
           </div>
           
@@ -211,10 +286,10 @@ const Index = () => {
           
           <div className="mt-16 text-center">
             <p className="text-white/70 mb-6">
-              Don't miss out on these limited-time offers! Claim your rewards now.
+              The more you play, the more you earn. Join millions of gamers earning rewards!
             </p>
             <a href="#claim-form" className="cta-btn">
-              GET MY REWARDS NOW <ArrowRight size={16} className="ml-2" />
+              START EARNING NOW <ArrowRight size={16} className="ml-2" />
             </a>
           </div>
         </div>
@@ -231,7 +306,7 @@ const Index = () => {
               Trusted by <span className="neon-text">Gamers</span> Worldwide
             </h2>
             <p className="text-white/70 max-w-2xl mx-auto">
-              Join thousands of satisfied gamers who have already claimed their rewards
+              Join millions of satisfied Mistplay users already earning rewards
             </p>
           </div>
           
@@ -250,16 +325,16 @@ const Index = () => {
           
           <div className="flex flex-wrap justify-center gap-6 mt-16">
             <div className="glass-panel px-5 py-3 flex items-center">
-              <div className="mr-3 text-2xl font-display font-bold text-gaming-blue">125K+</div>
-              <div className="text-sm text-white/70">Happy Gamers</div>
+              <div className="mr-3 text-2xl font-display font-bold text-gaming-blue">15M+</div>
+              <div className="text-sm text-white/70">Active Users</div>
             </div>
             <div className="glass-panel px-5 py-3 flex items-center">
-              <div className="mr-3 text-2xl font-display font-bold text-gaming-purple">98%</div>
-              <div className="text-sm text-white/70">Satisfaction Rate</div>
+              <div className="mr-3 text-2xl font-display font-bold text-gaming-purple">4.4</div>
+              <div className="text-sm text-white/70">App Store Rating</div>
             </div>
             <div className="glass-panel px-5 py-3 flex items-center">
-              <div className="mr-3 text-2xl font-display font-bold text-gaming-pink">4.9</div>
-              <div className="text-sm text-white/70">Average Rating</div>
+              <div className="mr-3 text-2xl font-display font-bold text-gaming-pink">$15M+</div>
+              <div className="text-sm text-white/70">Rewards Given</div>
             </div>
           </div>
         </div>
@@ -270,10 +345,10 @@ const Index = () => {
         <div className="container max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Claim Your <span className="neon-text">Free Rewards</span> Now
+              Start <span className="neon-text">Earning Rewards</span> Today
             </h2>
             <p className="text-white/70 max-w-2xl mx-auto">
-              Limited time offer! Enter your email below to receive your exclusive gaming rewards package
+              Sign up now and get 500 bonus Units when you download the Mistplay app and play your first game
             </p>
             
             <div className="mt-6 mb-10">
@@ -312,20 +387,20 @@ const Index = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
               <h3 className="font-display text-xl font-bold text-white">
-                Gaming<span className="text-gaming-blue">Rewards</span>
+                Mist<span className="text-gaming-blue">play</span>
               </h3>
               <p className="text-sm text-white/50 mt-1">
-                Premium in-game rewards for serious gamers
+                Play games. Earn rewards.
               </p>
             </div>
             
             <div className="text-sm text-white/50">
-              © {new Date().getFullYear()} Gaming Rewards. All rights reserved.
+              © {new Date().getFullYear()} Mistplay. All rights reserved.
             </div>
           </div>
           
           <div className="mt-8 pt-6 border-t border-white/5 text-xs text-white/40 text-center">
-            <p>This is a promotional offer. Terms and conditions apply. Not affiliated with game publishers.</p>
+            <p>Actual rewards may vary. Earning rates depend on gameplay and availability in your region.</p>
           </div>
         </div>
       </footer>
@@ -338,7 +413,7 @@ const Index = () => {
               <Trophy size={20} className="text-gaming-blue" />
             </div>
             <div>
-              <p className="text-sm font-medium text-white">{recentWinner.name} just claimed:</p>
+              <p className="text-sm font-medium text-white">{recentWinner.name} just redeemed:</p>
               <p className="text-xs text-gaming-blue">{recentWinner.prize}</p>
             </div>
           </div>
@@ -349,7 +424,7 @@ const Index = () => {
       {showBanner && (
         <div className="fixed top-0 left-0 w-full bg-gradient-to-r from-gaming-blue to-gaming-purple py-2 px-4 z-50 flex items-center justify-center">
           <p className="text-sm text-black font-medium">
-            🔥 Limited Time Offer! Claim your rewards in the next 24 hours!
+            🔥 New User Bonus! Register today for 500 extra Units!
           </p>
           <button 
             onClick={() => setShowBanner(false)} 

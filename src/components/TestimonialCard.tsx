@@ -33,6 +33,10 @@ const TestimonialCard = ({ name, game, avatar, quote, stars }: TestimonialCardPr
       </div>
       
       <p className="text-sm text-white/80 italic">"{quote}"</p>
+      
+      <div className="mt-4 pt-4 border-t border-white/10">
+        <p className="text-xs text-gaming-blue">Verified Mistplay User</p>
+      </div>
     </div>
   );
 };

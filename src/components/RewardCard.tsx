@@ -50,6 +50,11 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
       <p className="text-sm text-white/70">
         {description}
       </p>
+      
+      <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
+        <span className="text-xs text-white/50">Starting from</span>
+        <span className={`text-sm font-bold ${textStyles[glowColor]}`}>5,000 Units</span>
+      </div>
     </div>
   );
 };
