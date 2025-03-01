@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Trophy, Gamepad, Diamond, ArrowRight, Star, Shield } from 'lucide-react';
 import CountdownTimer from '../components/CountdownTimer';
@@ -13,12 +12,10 @@ const Index = () => {
   const [showWinner, setShowWinner] = useState(false);
 
   useEffect(() => {
-    // Show the banner after 3 seconds
     const bannerTimer = setTimeout(() => {
       setShowBanner(true);
     }, 3000);
 
-    // Show winners notification at random intervals
     const winners = [
       { name: 'Alex89', prize: '5000 Units' },
       { name: 'GamerQueen', prize: '$15 Amazon Gift Card' },
@@ -27,18 +24,16 @@ const Index = () => {
     ];
 
     const winnerInterval = setInterval(() => {
-      // Only show if user has been on page for more than 5 seconds
       if (Date.now() - pageLoadTime > 5000) {
         const randomWinner = winners[Math.floor(Math.random() * winners.length)];
         setRecentWinner(randomWinner);
         setShowWinner(true);
 
-        // Hide winner notification after 4 seconds
         setTimeout(() => {
           setShowWinner(false);
         }, 4000);
       }
-    }, 15000); // Show a winner every 15 seconds
+    }, 15000);
 
     const pageLoadTime = Date.now();
 
@@ -126,7 +121,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gaming-dark overflow-hidden">
-      {/* Hero Section */}
       <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 py-20 bg-hero-pattern">
         <div className="absolute inset-0 bg-gaming-dark/30 backdrop-blur-[2px]"></div>
         
@@ -171,7 +165,7 @@ const Index = () => {
                 
                 <div className="relative h-64 md:h-80 mb-4 overflow-hidden rounded-lg">
                   <img 
-                    src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=800&q=80" 
+                    src="/lovable-uploads/9d8e7357-5583-43f6-9e69-102cf9265fef.png" 
                     alt="Mistplay Rewards" 
                     className="object-cover w-full h-full transition-transform duration-700 ease-in-out hover:scale-105"
                   />
@@ -202,7 +196,6 @@ const Index = () => {
           </div>
         </div>
         
-        {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
           <span className="text-white/50 text-sm mb-2">Scroll to see games</span>
           <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-1">
@@ -211,7 +204,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Games Section */}
       <section id="games" className="py-20 relative">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
@@ -255,7 +247,6 @@ const Index = () => {
         <div className="absolute bottom-40 -right-40 w-80 h-80 bg-gaming-purple/5 rounded-full blur-3xl"></div>
       </section>
       
-      {/* Rewards Section */}
       <section id="rewards" className="py-20 relative">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
@@ -298,7 +289,6 @@ const Index = () => {
         <div className="absolute bottom-40 -right-40 w-80 h-80 bg-gaming-purple/5 rounded-full blur-3xl"></div>
       </section>
       
-      {/* Testimonials Section */}
       <section className="py-20 bg-gaming-darker relative clip-path-slant">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
@@ -340,7 +330,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Form Section */}
       <section id="claim-form" className="py-20 relative clip-path-slant-reverse">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
@@ -381,7 +370,6 @@ const Index = () => {
         <div className="absolute bottom-40 -left-40 w-80 h-80 bg-gaming-blue/5 rounded-full blur-3xl"></div>
       </section>
       
-      {/* Footer */}
       <footer className="py-10 border-t border-white/5">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
@@ -405,7 +393,6 @@ const Index = () => {
         </div>
       </footer>
       
-      {/* Recent Winner Notification */}
       {showWinner && (
         <div className="fixed bottom-5 left-5 glass-panel p-4 animate-fade-in z-50 max-w-xs border border-gaming-blue/20 shadow-neon-blue">
           <div className="flex items-center">
@@ -420,7 +407,6 @@ const Index = () => {
         </div>
       )}
       
-      {/* Limited Time Banner */}
       {showBanner && (
         <div className="fixed top-0 left-0 w-full bg-gradient-to-r from-gaming-blue to-gaming-purple py-2 px-4 z-50 flex items-center justify-center">
           <p className="text-sm text-black font-medium">
