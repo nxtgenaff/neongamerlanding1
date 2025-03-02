@@ -125,11 +125,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gaming-dark overflow-hidden">
-      <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 py-20 bg-hero-pattern">
+      <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 py-16 md:py-20 bg-hero-pattern">
         <div className="absolute inset-0 bg-gaming-dark/30 backdrop-blur-[2px]"></div>
         
         <div className="container max-w-6xl mx-auto z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="text-left" data-aos="fade-right">
               <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
                 <p className="text-gaming-blue text-sm font-medium flex items-center">
@@ -137,11 +137,11 @@ const Index = () => {
                 </p>
               </div>
               
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white tracking-tight">
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4 text-white tracking-tight">
                 Get <span className="neon-text">Paid to Play</span> Your Favorite Mobile Games!
               </h1>
               
-              <p className="text-lg text-white/80 mb-8 max-w-xl">
+              <p className="text-base md:text-lg text-white/80 mb-6 md:mb-8 max-w-xl">
                 Turn your gaming time into real rewards! Earn Units as you play and redeem them for gift cards, PayPal cash, and more.
               </p>
               
@@ -150,17 +150,17 @@ const Index = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="https://areyourealhuman.com/cl/i/6d4ow7" className="cta-btn">
+                <a href="https://areyourealhuman.com/cl/i/6d4ow7" className="cta-btn touch-target">
                   START EARNING NOW <ArrowRight size={16} className="ml-2" />
                 </a>
-                <a href="#games" className="gaming-btn-outline">
+                <a href="#games" className="gaming-btn-outline touch-target">
                   VIEW GAMES
                 </a>
               </div>
             </div>
             
-            <div className="relative" data-aos="fade-left">
-              <div className="glass-panel p-6 md:p-8 relative border border-white/5 overflow-hidden">
+            <div className="relative mt-8 md:mt-0" data-aos="fade-left">
+              <div className="glass-panel p-4 sm:p-6 md:p-8 relative border border-white/5 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-neon-border animate-gradient-flow"></div>
                 <div className="flex items-center mb-6">
                   <Gamepad size={28} className="text-gaming-blue mr-3" />
@@ -335,34 +335,34 @@ const Index = () => {
         </div>
       </section>
       
-      <section id="claim-form" className="py-20 relative clip-path-slant-reverse">
+      <section id="claim-form" className="py-16 md:py-20 relative clip-path-slant-reverse">
         <div className="container max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4">
               Start <span className="neon-text">Earning Rewards</span> Today
             </h2>
-            <p className="text-white/70 max-w-2xl mx-auto">
+            <p className="text-white/70 max-w-2xl mx-auto text-sm md:text-base">
               Sign up now and get 500 bonus Units when you download the Mistplay app and play your first game
             </p>
             
-            <div className="mt-6 mb-10">
+            <div className="mt-4 md:mt-6 mb-6 md:mb-10">
               <CountdownTimer hours={23} minutes={59} seconds={59} />
             </div>
           </div>
           
           <GamingForm />
           
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="glass-panel p-4 flex items-center justify-center border border-white/5">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Former_Visa_%28company%29_logo.svg/2560px-Former_Visa_%28company%29_logo.svg.png" alt="Visa" className="h-6 opacity-70" />
+          <div className="mt-8 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <div className="glass-panel p-3 md:p-4 flex items-center justify-center border border-white/5">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Former_Visa_%28company%29_logo.svg/2560px-Former_Visa_%28company%29_logo.svg.png" alt="Visa" className="h-5 md:h-6 opacity-70" loading="lazy" />
             </div>
-            <div className="glass-panel p-4 flex items-center justify-center border border-white/5">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" className="h-6 opacity-70" />
+            <div className="glass-panel p-3 md:p-4 flex items-center justify-center border border-white/5">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" className="h-5 md:h-6 opacity-70" loading="lazy" />
             </div>
-            <div className="glass-panel p-4 flex items-center justify-center border border-white/5">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" alt="PayPal" className="h-6 opacity-70" />
+            <div className="glass-panel p-3 md:p-4 flex items-center justify-center border border-white/5">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" alt="PayPal" className="h-5 md:h-6 opacity-70" loading="lazy" />
             </div>
-            <div className="glass-panel p-4 flex items-center justify-center border border-white/5">
+            <div className="glass-panel p-3 md:p-4 flex items-center justify-center border border-white/5">
               <div className="text-xs text-white/50 flex items-center">
                 <Shield size={14} className="mr-1" />
                 Secure & Encrypted
@@ -375,7 +375,7 @@ const Index = () => {
         <div className="absolute bottom-40 -left-40 w-80 h-80 bg-gaming-blue/5 rounded-full blur-3xl"></div>
       </section>
       
-      <footer className="py-10 border-t border-white/5">
+      <footer className="py-8 md:py-10 border-t border-white/5">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
@@ -425,6 +425,12 @@ const Index = () => {
           </button>
         </div>
       )}
+      
+      <div className="sticky-cta">
+        <a href="https://areyourealhuman.com/cl/i/6d4ow7" className="cta-btn w-full text-sm">
+          START EARNING NOW <ArrowRight size={16} className="ml-2" />
+        </a>
+      </div>
     </div>
   );
 };

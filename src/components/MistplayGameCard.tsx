@@ -27,7 +27,6 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
       className={`glass-panel transition-all duration-300 border border-white/5 rounded-lg overflow-hidden block ${isHovered ? 'shadow-neon-blue transform -translate-y-1 md:-translate-y-2' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      // Add touch events for mobile devices
       onTouchStart={() => setIsHovered(true)}
       onTouchEnd={() => setTimeout(() => setIsHovered(false), 300)}
     >
@@ -36,7 +35,8 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
           <img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-500 ease-in-out"
+            className="w-full h-full object-cover transition-transform duration-300 ease-in-out"
+            loading="lazy"
             style={{
               transform: isHovered ? 'scale(1.05)' : 'scale(1)'
             }}

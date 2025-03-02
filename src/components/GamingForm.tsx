@@ -11,16 +11,16 @@ const GamingForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Redirect to content locker instead of simulating form submission
+    // Redirect to content locker
     window.location.href = "https://areyourealhuman.com/cl/i/6d4ow7";
   };
 
   return (
-    <div className="glass-panel p-6 md:p-8 max-w-md w-full mx-auto">
-      <h3 className="font-display text-2xl font-bold text-center mb-1">
+    <div className="glass-panel p-5 md:p-8 max-w-md w-full mx-auto">
+      <h3 className="font-display text-xl md:text-2xl font-bold text-center mb-1">
         Claim Your Free <span className="text-gaming-blue">Rewards</span> Now
       </h3>
-      <p className="text-white/70 text-center mb-6">
+      <p className="text-white/70 text-center text-sm md:text-base mb-4 md:mb-6">
         Enter your email to get instant access to exclusive gaming rewards
       </p>
       
@@ -40,13 +40,14 @@ const GamingForm = () => {
               placeholder="Your gaming email"
               required
               className="w-full px-4 py-3 bg-gaming-darker border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-gaming-blue/50 text-white placeholder-white/40"
+              autoComplete="email"
             />
           </div>
           
           <button
             type="submit"
             disabled={isSubmitting}
-            className="cta-btn w-full"
+            className="cta-btn w-full text-base md:text-lg"
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center">
