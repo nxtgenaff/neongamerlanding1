@@ -195,7 +195,7 @@ const Index = () => {
               </div>
               
               <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gaming-blue/20 rounded-full blur-3xl"></div>
-              <div className="absolute -top-6 -left-6 w-24 h-24 bg-gaming-purple/20 rounded-full blur-3xl"></div>
+              <div className="absolute -top-6 -left-6 w-24 h-24 bg-gaming-purple/20 rounded-full blur-3xl hidden sm:block"></div>
             </div>
           </div>
         </div>
