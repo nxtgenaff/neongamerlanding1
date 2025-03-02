@@ -24,16 +24,19 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
   return (
     <a 
       href={link || "#"}
-      className={`glass-panel transition-all duration-500 border border-white/5 rounded-lg overflow-hidden block ${isHovered ? 'shadow-neon-blue transform -translate-y-2' : ''}`}
+      className={`glass-panel transition-all duration-300 border border-white/5 rounded-lg overflow-hidden block ${isHovered ? 'shadow-neon-blue transform -translate-y-1 md:-translate-y-2' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      // Add touch events for mobile devices
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setTimeout(() => setIsHovered(false), 300)}
     >
       <div className="relative">
-        <div className="h-40 overflow-hidden">
+        <div className="h-36 sm:h-40 overflow-hidden">
           <img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-700 ease-in-out"
+            className="w-full h-full object-cover transition-transform duration-500 ease-in-out"
             style={{
               transform: isHovered ? 'scale(1.05)' : 'scale(1)'
             }}
@@ -45,9 +48,9 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
         </div>
       </div>
       
-      <div className="p-4">
-        <h3 className="font-display font-bold text-lg text-white mb-1">{title}</h3>
-        <p className="text-xs text-white/50 mb-3">{genre}</p>
+      <div className="p-3 sm:p-4">
+        <h3 className="font-display font-bold text-base sm:text-lg text-white mb-1 line-clamp-1">{title}</h3>
+        <p className="text-xs text-white/50 mb-2 sm:mb-3">{genre}</p>
         
         <div className="flex items-center justify-between">
           <div className="flex items-center">

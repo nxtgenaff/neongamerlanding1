@@ -1,8 +1,15 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  #root {
+    padding: 2rem;
+  }
 }
 
 .logo {
@@ -39,4 +46,18 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .glass-panel {
+    transition: all 0.2s ease;
+  }
+  
+  .cta-btn, .gaming-btn-outline {
+    width: 100%;
+    justify-content: center;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
 }
