@@ -159,7 +159,7 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="relative mt-8 md:mt-0" data-aos="fade-left">
+            <div className="relative mt-8 md:mt-0 hidden md:block" data-aos="fade-left">
               <div className="glass-panel p-4 sm:p-6 md:p-8 relative border border-white/5 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-neon-border animate-gradient-flow"></div>
                 <div className="flex items-center mb-6">
@@ -195,7 +195,7 @@ const Index = () => {
               </div>
               
               <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gaming-blue/20 rounded-full blur-3xl"></div>
-              <div className="absolute -top-6 -left-6 w-24 h-24 bg-gaming-purple/20 rounded-full blur-3xl hidden sm:block"></div>
+              <div className="absolute -top-6 -left-6 w-24 h-24 bg-gaming-purple/20 rounded-full blur-3xl"></div>
             </div>
           </div>
         </div>
