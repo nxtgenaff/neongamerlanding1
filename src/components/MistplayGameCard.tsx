@@ -24,7 +24,7 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
   return (
     <a 
       href={link || "#"}
-      className={`overflow-hidden block transition-all duration-500 transform ${isHovered ? 'scale-[1.03]' : ''}`}
+      className={`overflow-hidden block transition-all duration-500 transform ${isHovered ? 'scale-[1.02]' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(true)}

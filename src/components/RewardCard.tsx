@@ -26,7 +26,7 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
 
   return (
     <div 
-      className={`relative rounded-[28px] overflow-hidden transition-all duration-500 transform ${isHovered ? 'scale-[1.03]' : ''}`}
+      className={`relative rounded-[28px] overflow-hidden transition-all duration-500 transform ${isHovered ? 'scale-[1.02]' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(true)}
