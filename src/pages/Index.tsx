@@ -5,7 +5,7 @@ import RewardCard from '../components/RewardCard';
 import TestimonialCard from '../components/TestimonialCard';
 import GamingForm from '../components/GamingForm';
 import MistplayGameCard from '../components/MistplayGameCard';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, CarouselDots } from '../components/ui/carousel';
 
 const Index = () => {
   const [showBanner, setShowBanner] = useState(false);
@@ -212,14 +212,17 @@ const Index = () => {
           
           <Carousel 
             opts={{
-              align: "start",
+              align: "center",
               loop: true,
             }}
             className="w-full"
+            autoPlay={true}
+            autoPlayInterval={4000}
+            stacked={true}
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
+            <CarouselContent>
               {mistplayGames.map((game, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/4">
+                <CarouselItem key={index}>
                   <MistplayGameCard 
                     title={game.title} 
                     genre={game.genre} 
@@ -234,6 +237,9 @@ const Index = () => {
             <div className="flex justify-center mt-6 gap-2">
               <CarouselPrevious className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
               <CarouselNext className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+            </div>
+            <div className="mt-4">
+              <CarouselDots />
             </div>
           </Carousel>
           
@@ -273,10 +279,13 @@ const Index = () => {
               loop: true,
             }}
             className="w-full"
+            autoPlay={true}
+            autoPlayInterval={5000}
+            stacked={true}
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
+            <CarouselContent>
               {rewards.map((reward, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                <CarouselItem key={index}>
                   <RewardCard 
                     title={reward.title} 
                     description={reward.description} 
@@ -289,6 +298,9 @@ const Index = () => {
             <div className="flex justify-center mt-6 gap-2">
               <CarouselPrevious className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
               <CarouselNext className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+            </div>
+            <div className="mt-4">
+              <CarouselDots />
             </div>
           </Carousel>
           
@@ -323,10 +335,13 @@ const Index = () => {
               loop: true,
             }}
             className="w-full"
+            autoPlay={true}
+            autoPlayInterval={4500}
+            stacked={true}
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
+            <CarouselContent>
               {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                <CarouselItem key={index}>
                   <TestimonialCard 
                     name={testimonial.name} 
                     game={testimonial.game} 
@@ -340,6 +355,9 @@ const Index = () => {
             <div className="flex justify-center mt-6 gap-2">
               <CarouselPrevious className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
               <CarouselNext className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+            </div>
+            <div className="mt-4">
+              <CarouselDots />
             </div>
           </Carousel>
           

@@ -15,7 +15,7 @@ const TestimonialCard = ({ name, game, avatar, quote, stars }: TestimonialCardPr
 
   return (
     <div 
-      className={`relative rounded-[28px] overflow-hidden transition-all duration-500 bg-gradient-to-br from-gaming-darker to-gaming-dark border border-white/5 transform ${isHovered ? 'scale-[1.02]' : ''}`}
+      className={`relative rounded-[28px] overflow-hidden transition-all duration-500 bg-gradient-to-br from-gaming-darker to-gaming-dark border border-white/5 transform ${isHovered ? 'scale-[1.02]' : ''} shadow-xl`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(true)}
