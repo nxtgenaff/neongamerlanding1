@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface RewardCardProps {
   title: string;
@@ -24,9 +25,15 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
     pink: 'text-gaming-pink'
   };
 
+  const buttonBgStyles = {
+    blue: 'bg-gaming-blue hover:bg-gaming-blue/90',
+    purple: 'bg-gaming-purple hover:bg-gaming-purple/90',
+    pink: 'bg-gaming-pink hover:bg-gaming-pink/90'
+  };
+
   return (
     <div 
-      className={`relative rounded-[28px] overflow-hidden transition-all duration-500 transform ${isHovered ? 'scale-[1.02]' : ''}`}
+      className={`relative rounded-[28px] overflow-hidden transition-all duration-500 h-full transform ${isHovered ? 'scale-[1.02]' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(true)}
@@ -52,16 +59,16 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
         </div>
         
         <div className="mt-4">
-          <div className="flex items-center justify-between bg-white/5 p-3 rounded-lg backdrop-blur-sm">
+          <div className="flex items-center justify-between bg-white/5 p-3 rounded-lg backdrop-blur-sm mb-4">
             <span className="text-xs text-white/50">Starting from</span>
             <span className={`text-sm font-bold ${textStyles[glowColor]}`}>5,000 Units</span>
           </div>
           
-          <div className={`mt-4 flex justify-end ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-            <div className={`w-10 h-10 rounded-full bg-${glowColor === 'blue' ? 'gaming-blue' : glowColor === 'purple' ? 'gaming-purple' : 'gaming-pink'}/10 flex items-center justify-center`}>
-              <ArrowRight className={textStyles[glowColor]} size={18} />
-            </div>
-          </div>
+          <Button 
+            className={`w-full ${buttonBgStyles[glowColor]} text-white font-medium transition-all duration-300`}
+          >
+            Play Now <ArrowRight size={16} className="ml-1" />
+          </Button>
         </div>
       </div>
     </div>
