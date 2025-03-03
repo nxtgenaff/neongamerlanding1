@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
-import { Star } from 'lucide-react';
+import { Star, ArrowRight } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface MistplayGameCardProps {
   title: string;
@@ -22,17 +23,16 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
   };
 
   return (
-    <a 
-      href={link || "#"}
-      className={`overflow-hidden block transition-all duration-500 transform ${isHovered ? 'scale-[1.02]' : ''}`}
+    <div 
+      className={`rounded-[28px] overflow-hidden transition-all duration-500 transform ${isHovered ? 'scale-[1.02]' : ''} h-full`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(true)}
       onTouchEnd={() => setTimeout(() => setIsHovered(false), 300)}
     >
-      <div className="rounded-[28px] overflow-hidden relative bg-gradient-to-br from-gaming-darker to-gaming-dark border border-white/5">
+      <div className="relative bg-gradient-to-br from-gaming-darker to-gaming-dark border border-white/5 h-full flex flex-col">
         <div className="relative">
-          <div className="h-52 sm:h-56 overflow-hidden">
+          <div className="h-44 sm:h-48 lg:h-52 overflow-hidden">
             <div 
               className="w-full h-full bg-center bg-cover transition-transform duration-700 ease-in-out"
               style={{
@@ -49,22 +49,30 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
           <div className="absolute bottom-0 left-0 w-full p-5 z-10">
             <h3 className="font-display font-bold text-xl text-white mb-2 line-clamp-1">{title}</h3>
             <p className="text-xs text-white/60 mb-3">{genre}</p>
-            
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Star size={16} className="text-gaming-accent fill-gaming-accent mr-1" />
-                <span className="text-xs text-white/70">Earn up to</span>
-              </div>
-              <div className="text-gaming-accent font-bold text-sm">{points} Units</div>
-            </div>
           </div>
+        </div>
+        
+        <div className="p-5 pt-0 flex-grow flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center">
+              <Star size={16} className="text-gaming-accent fill-gaming-accent mr-1" />
+              <span className="text-xs text-white/70">Earn up to</span>
+            </div>
+            <div className="text-gaming-accent font-bold text-sm">{points} Units</div>
+          </div>
+          
+          <a href={link || "#"}>
+            <Button className="w-full bg-gaming-accent hover:bg-gaming-accent/90 text-black font-medium">
+              Play Now <ArrowRight size={16} className="ml-1" />
+            </Button>
+          </a>
         </div>
         
         <div 
           className={`absolute inset-0 opacity-0 ${isHovered ? 'opacity-20' : ''} transition-opacity duration-500 bg-gradient-to-br from-gaming-blue via-gaming-purple to-gaming-pink`}
         />
       </div>
-    </a>
+    </div>
   );
 };
 
