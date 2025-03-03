@@ -1,9 +1,9 @@
 
 import * as React from "react"
-import { ArrowLeft, ArrowRight } from "lucide-react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -12,30 +12,29 @@ type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
 type CarouselOptions = UseCarouselParameters[0]
 type CarouselPlugin = UseCarouselParameters[1]
-type CustomCarouselProps = {
+
+type CarouselProps = {
+  opts?: CarouselOptions
+  plugins?: CarouselPlugin
+  orientation?: "horizontal" | "vertical"
+  setApi?: (api: CarouselApi) => void
   autoPlay?: boolean
   autoPlayInterval?: number
   stacked?: boolean
 }
 
-export interface CarouselProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    CustomCarouselProps {
-  opts?: CarouselOptions
-  plugins?: CarouselPlugin
-  orientation?: "horizontal" | "vertical"
-  setApi?: (api: CarouselApi) => void
-}
-
 type CarouselContextProps = {
-  carouselRef: ReturnType<typeof React.useRef<HTMLDivElement>>
+  carouselRef: ReturnType<typeof useEmblaCarousel>[0]
   api: ReturnType<typeof useEmblaCarousel>[1]
   scrollPrev: () => void
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
   selectedIndex: number
-  slidesCount: number
+  scrollSnaps: number[]
+  autoPlay: boolean
+  autoPlayInterval: number
+  stacked: boolean
 } & CarouselProps
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
@@ -52,7 +51,7 @@ function useCarousel() {
 
 const Carousel = React.forwardRef<
   HTMLDivElement,
-  CarouselProps
+  React.HTMLAttributes<HTMLDivElement> & CarouselProps
 >(
   (
     {
@@ -70,28 +69,51 @@ const Carousel = React.forwardRef<
     ref
   ) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0)
-    const [slidesCount, setSlidesCount] = React.useState(0)
-    const [canScrollPrev, setCanScrollPrev] = React.useState(false)
-    const [canScrollNext, setCanScrollNext] = React.useState(false)
+    const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([])
     
-    const containerRef = React.useRef<HTMLDivElement>(null)
-    const carouselRef = React.useRef<HTMLDivElement>(null)
-
-    const [emblaRef, emblaApi] = useEmblaCarousel(
+    const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
       },
       plugins
     )
+    const [canScrollPrev, setCanScrollPrev] = React.useState(false)
+    const [canScrollNext, setCanScrollNext] = React.useState(false)
+
+    // Setup autoplay timer
+    React.useEffect(() => {
+      if (!api || !autoPlay) return
+      
+      const intervalId = setInterval(() => {
+        if (api.canScrollNext()) {
+          api.scrollNext()
+        } else {
+          api.scrollTo(0)
+        }
+      }, autoPlayInterval)
+      
+      return () => clearInterval(intervalId)
+    }, [api, autoPlay, autoPlayInterval])
+
+    const onSelect = React.useCallback((api: CarouselApi) => {
+      if (!api) {
+        return
+      }
+
+      setSelectedIndex(api.selectedScrollSnap())
+      setScrollSnaps(api.scrollSnapList())
+      setCanScrollPrev(api.canScrollPrev())
+      setCanScrollNext(api.canScrollNext())
+    }, [])
 
     const scrollPrev = React.useCallback(() => {
-      emblaApi?.scrollPrev()
-    }, [emblaApi])
+      api?.scrollPrev()
+    }, [api])
 
     const scrollNext = React.useCallback(() => {
-      emblaApi?.scrollNext()
-    }, [emblaApi])
+      api?.scrollNext()
+    }, [api])
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -106,106 +128,56 @@ const Carousel = React.forwardRef<
       [scrollPrev, scrollNext]
     )
 
-    // Add auto-play functionality
     React.useEffect(() => {
-      if (autoPlay && emblaApi) {
-        const interval = setInterval(() => {
-          if (!emblaApi.canScrollNext()) {
-            emblaApi.scrollTo(0)
-          } else {
-            emblaApi.scrollNext()
-          }
-        }, autoPlayInterval)
-
-        return () => clearInterval(interval)
+      if (!api || !setApi) {
+        return
       }
-    }, [autoPlay, autoPlayInterval, emblaApi])
 
-    const onSelect = React.useCallback((api: CarouselApi) => {
-      if (!api) return
-
-      setSelectedIndex(api.selectedScrollSnap())
-      setSlidesCount(api.scrollSnapList().length)
-      setCanScrollPrev(api.canScrollPrev())
-      setCanScrollNext(api.canScrollNext())
-    }, [])
+      setApi(api)
+    }, [api, setApi])
 
     React.useEffect(() => {
-      if (!emblaApi) return
-
-      onSelect(emblaApi)
-      emblaApi.on("reInit", onSelect)
-      emblaApi.on("select", onSelect)
-
-      // Add/remove 'is-prev' and 'is-next' classes for stacked effect
-      if (stacked && emblaApi) {
-        const slides = emblaApi.slideNodes()
-        const applyStackedClasses = () => {
-          const currentIndex = emblaApi.selectedScrollSnap()
-          
-          slides.forEach((slide, index) => {
-            slide.classList.remove('is-current', 'is-prev', 'is-next')
-            
-            if (index === currentIndex) {
-              slide.classList.add('is-current')
-            } else if (index === currentIndex - 1 || (currentIndex === 0 && index === slides.length - 1)) {
-              slide.classList.add('is-prev')
-            } else if (index === currentIndex + 1 || (currentIndex === slides.length - 1 && index === 0)) {
-              slide.classList.add('is-next')
-            }
-          })
-        }
-        
-        applyStackedClasses()
-        emblaApi.on("select", applyStackedClasses)
-        emblaApi.on("reInit", applyStackedClasses)
+      if (!api) {
+        return
       }
 
-      if (setApi) {
-        setApi(emblaApi)
-      }
+      onSelect(api)
+      api.on("reInit", onSelect)
+      api.on("select", onSelect)
 
-    }, [emblaApi, setApi, onSelect, stacked])
-
-    React.useEffect(() => {
-      if (containerRef.current) {
-        const containerElement = containerRef.current
-        containerElement.classList.toggle('cards-swipe-container', stacked)
+      return () => {
+        api?.off("select", onSelect)
       }
-    }, [stacked])
+    }, [api, onSelect])
 
     return (
       <CarouselContext.Provider
         value={{
           carouselRef,
-          api: emblaApi,
+          api: api,
           opts,
-          orientation: orientation || "horizontal",
+          orientation:
+            orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
           scrollPrev,
           scrollNext,
           canScrollPrev,
           canScrollNext,
           selectedIndex,
-          slidesCount,
+          scrollSnaps,
+          autoPlay,
+          autoPlayInterval,
           stacked
         }}
       >
         <div
-          ref={containerRef}
-          className={cn("relative", className)}
+          ref={ref}
+          onKeyDownCapture={handleKeyDown}
+          className={cn("relative", className, stacked ? "cards-swipe-container" : "")}
           role="region"
           aria-roledescription="carousel"
           {...props}
         >
-          <div
-            ref={ref}
-            onKeyDownCapture={handleKeyDown}
-            className="overflow-hidden"
-          >
-            <div ref={emblaRef} className="flex">
-              {children}
-            </div>
-          </div>
+          {children}
         </div>
       </CarouselContext.Provider>
     )
@@ -217,18 +189,21 @@ const CarouselContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { orientation } = useCarousel()
+  const { carouselRef, orientation, stacked } = useCarousel()
 
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "flex",
-        orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
-        className
-      )}
-      {...props}
-    />
+    <div ref={carouselRef} className={cn("overflow-hidden", stacked ? "embla" : "")}>
+      <div
+        ref={ref}
+        className={cn(
+          "flex",
+          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
+          className,
+          stacked ? "embla__container" : ""
+        )}
+        {...props}
+      />
+    </div>
   )
 })
 CarouselContent.displayName = "CarouselContent"
@@ -237,7 +212,44 @@ const CarouselItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { orientation } = useCarousel()
+  const { orientation, stacked, selectedIndex, api } = useCarousel()
+
+  // Get slide index for stacked styling
+  const [slideIdx, setSlideIdx] = React.useState(-1)
+  
+  React.useEffect(() => {
+    if (!stacked || !api) return
+    
+    const onSlideVisible = () => {
+      if (!api) return
+      const nodes = api.slideNodes()
+      const node = ref?.current
+      
+      if (!node || !nodes) return
+      
+      const slideIndex = Array.from(nodes).indexOf(node)
+      setSlideIdx(slideIndex)
+    }
+    
+    onSlideVisible()
+    api.on('select', onSlideVisible)
+    
+    return () => {
+      api.off('select', onSlideVisible)
+    }
+  }, [api, ref, stacked])
+  
+  // Determine slide position relative to current
+  let slidePosition = ''
+  if (stacked && slideIdx !== -1) {
+    if (slideIdx === selectedIndex) {
+      slidePosition = 'is-current'
+    } else if (slideIdx === selectedIndex - 1) {
+      slidePosition = 'is-prev'
+    } else if (slideIdx === selectedIndex + 1) {
+      slidePosition = 'is-next'
+    }
+  }
 
   return (
     <div
@@ -247,7 +259,9 @@ const CarouselItem = React.forwardRef<
       className={cn(
         "min-w-0 shrink-0 grow-0 basis-full",
         orientation === "horizontal" ? "pl-4" : "pt-4",
-        className
+        className,
+        stacked ? "embla__slide" : "",
+        slidePosition
       )}
       {...props}
     />
@@ -314,21 +328,15 @@ const CarouselNext = React.forwardRef<
 CarouselNext.displayName = "CarouselNext"
 
 const CarouselDots = () => {
-  const { api, selectedIndex, slidesCount } = useCarousel()
-
-  if (!api || slidesCount <= 1) return null
-
+  const { api, selectedIndex, scrollSnaps } = useCarousel()
+  
   return (
-    <div className="flex justify-center gap-1 mt-2">
-      {Array.from({ length: slidesCount }).map((_, index) => (
+    <div className="carousel-dots">
+      {scrollSnaps.map((_, index) => (
         <button
           key={index}
-          className={`w-2 h-2 rounded-full transition-all ${
-            selectedIndex === index 
-              ? 'bg-white scale-125' 
-              : 'bg-white/30'
-          }`}
-          onClick={() => api.scrollTo(index)}
+          className={`carousel-dot ${index === selectedIndex ? 'active' : ''}`}
+          onClick={() => api?.scrollTo(index)}
           aria-label={`Go to slide ${index + 1}`}
         />
       ))}
@@ -338,11 +346,11 @@ const CarouselDots = () => {
 CarouselDots.displayName = "CarouselDots"
 
 export {
+  type CarouselApi,
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-  CarouselDots,
-  type CarouselApi,
+  CarouselDots
 }
