@@ -1,5 +1,4 @@
 
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -114,3 +113,49 @@
     animation-duration: 3s;
   }
 }
+
+/* Carousel custom styles */
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide {
+  position: relative;
+  flex: 0 0 100%;
+}
+
+@media (min-width: 768px) {
+  .embla__slide {
+    flex: 0 0 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .embla__slide {
+    flex: 0 0 33.33%;
+  }
+}
+
+.carousel-control {
+  background: rgba(15, 15, 25, 0.7);
+  border: 1px solid rgba(79, 103, 255, 0.3);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.carousel-control:hover {
+  background: rgba(25, 25, 35, 0.9);
+  border-color: rgba(79, 103, 255, 0.5);
+}
+

@@ -5,6 +5,8 @@ import RewardCard from '../components/RewardCard';
 import TestimonialCard from '../components/TestimonialCard';
 import GamingForm from '../components/GamingForm';
 import MistplayGameCard from '../components/MistplayGameCard';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../components/ui/carousel';
+
 const Index = () => {
   const [showBanner, setShowBanner] = useState(false);
   const [recentWinner, setRecentWinner] = useState({
@@ -12,6 +14,7 @@ const Index = () => {
     prize: ''
   });
   const [showWinner, setShowWinner] = useState(false);
+
   useEffect(() => {
     const bannerTimer = setTimeout(() => {
       setShowBanner(true);
@@ -45,6 +48,7 @@ const Index = () => {
       clearInterval(winnerInterval);
     };
   }, []);
+
   const rewards = [{
     title: "Gift Cards",
     description: "Convert your Mistplay Units to gift cards from Amazon, Google Play, and more.",
@@ -61,6 +65,7 @@ const Index = () => {
     image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
     glowColor: "pink" as const
   }];
+
   const testimonials = [{
     name: "Michael R.",
     game: "Coin Master Player",
@@ -80,6 +85,7 @@ const Index = () => {
     quote: "I play games anyway, so getting rewarded for it is an awesome bonus!",
     stars: 4
   }];
+
   const mistplayGames = [{
     title: "Coin Master",
     genre: "Casual",
@@ -109,6 +115,7 @@ const Index = () => {
     popularity: "Hot" as const,
     link: "https://areyourealhuman.com/cl/i/6d4ow7"
   }];
+
   return <div className="min-h-screen bg-gaming-dark overflow-hidden">
       <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 py-16 md:py-20 bg-hero-pattern">
         <div className="absolute inset-0 bg-gaming-dark/30 backdrop-blur-[2px]"></div>
@@ -203,9 +210,32 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-4 gap-6">
-            {mistplayGames.map((game, index) => <MistplayGameCard key={index} title={game.title} genre={game.genre} points={game.points} image={game.image} popularity={game.popularity} link={game.link} />)}
-          </div>
+          <Carousel 
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {mistplayGames.map((game, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/4">
+                  <MistplayGameCard 
+                    title={game.title} 
+                    genre={game.genre} 
+                    points={game.points} 
+                    image={game.image} 
+                    popularity={game.popularity} 
+                    link={game.link} 
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-6 gap-2">
+              <CarouselPrevious className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+              <CarouselNext className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+            </div>
+          </Carousel>
           
           <div className="mt-16 text-center">
             <p className="text-white/70 mb-6">
@@ -237,9 +267,30 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            {rewards.map((reward, index) => <RewardCard key={index} title={reward.title} description={reward.description} image={reward.image} glowColor={reward.glowColor} />)}
-          </div>
+          <Carousel 
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {rewards.map((reward, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <RewardCard 
+                    title={reward.title} 
+                    description={reward.description} 
+                    image={reward.image} 
+                    glowColor={reward.glowColor} 
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-6 gap-2">
+              <CarouselPrevious className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+              <CarouselNext className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+            </div>
+          </Carousel>
           
           <div className="mt-16 text-center">
             <p className="text-white/70 mb-6">
@@ -266,9 +317,31 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => <TestimonialCard key={index} name={testimonial.name} game={testimonial.game} avatar={testimonial.avatar} quote={testimonial.quote} stars={testimonial.stars} />)}
-          </div>
+          <Carousel 
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <TestimonialCard 
+                    name={testimonial.name} 
+                    game={testimonial.game} 
+                    avatar={testimonial.avatar} 
+                    quote={testimonial.quote} 
+                    stars={testimonial.stars} 
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-6 gap-2">
+              <CarouselPrevious className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+              <CarouselNext className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+            </div>
+          </Carousel>
           
           <div className="flex flex-wrap justify-center gap-6 mt-16">
             <div className="glass-panel px-5 py-3 flex items-center">
