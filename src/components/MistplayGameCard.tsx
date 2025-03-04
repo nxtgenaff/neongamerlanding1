@@ -24,7 +24,7 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
 
   return (
     <div 
-      className={`rounded-[28px] overflow-hidden transition-all duration-500 transform ${isHovered ? 'scale-[1.02]' : ''} h-full`}
+      className="responsive-card rounded-[28px] overflow-hidden transition-all duration-500 transform h-full flex flex-col"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(true)}
@@ -32,7 +32,7 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
     >
       <div className="relative bg-gradient-to-br from-gaming-darker to-gaming-dark border border-white/5 h-full flex flex-col">
         <div className="relative">
-          <div className="h-44 sm:h-48 lg:h-52 overflow-hidden">
+          <div className="card-image-container h-40 sm:h-44 md:h-48 lg:h-52 overflow-hidden">
             <div 
               className="w-full h-full bg-center bg-cover transition-transform duration-700 ease-in-out"
               style={{
@@ -61,7 +61,7 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
             <div className="text-gaming-accent font-bold text-sm">{points} Units</div>
           </div>
           
-          <a href={link || "#"}>
+          <a href={link || "#"} className="mt-auto">
             <Button className="w-full bg-gaming-accent hover:bg-gaming-accent/90 text-black font-medium">
               Play Now <ArrowRight size={16} className="ml-1" />
             </Button>

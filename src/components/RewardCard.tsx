@@ -33,7 +33,7 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
 
   return (
     <div 
-      className={`relative rounded-[28px] overflow-hidden transition-all duration-500 h-full transform ${isHovered ? 'scale-[1.02]' : ''}`}
+      className="responsive-card rounded-[28px] overflow-hidden transition-all duration-500 h-full transform"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(true)}
@@ -48,17 +48,17 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
         className={`absolute inset-0 bg-gradient-to-r ${gradientStyles[glowColor]} opacity-0 ${isHovered ? 'opacity-100' : ''} transition-opacity duration-500 z-20`}
       />
       
-      <div className="relative p-6 sm:p-7 z-30 h-full flex flex-col justify-between">
+      <div className="relative p-5 sm:p-6 z-30 h-full flex flex-col justify-between">
         <div>
-          <h3 className={`font-display font-bold text-2xl mb-3 ${textStyles[glowColor]}`}>
+          <h3 className={`font-display font-bold text-xl sm:text-2xl mb-3 ${textStyles[glowColor]}`}>
             {title}
           </h3>
-          <p className="text-white/80 mb-4">
+          <p className="text-sm sm:text-base text-white/80 mb-4">
             {description}
           </p>
         </div>
         
-        <div className="mt-4">
+        <div className="mt-auto">
           <div className="flex items-center justify-between bg-white/5 p-3 rounded-lg backdrop-blur-sm mb-4">
             <span className="text-xs text-white/50">Starting from</span>
             <span className={`text-sm font-bold ${textStyles[glowColor]}`}>5,000 Units</span>
