@@ -58,13 +58,6 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-bold;
   }
-  
-  @media (max-width: 640px) {
-    body {
-      /* Simplified gradient for mobile */
-      background-image: radial-gradient(circle at 50% 30%, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
-    }
-  }
 }
 
 @layer components {
@@ -90,16 +83,6 @@
   
   .cta-btn {
     @apply relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-display text-lg font-bold rounded-lg bg-gradient-to-r from-gaming-blue via-gaming-purple to-gaming-pink text-black transition-all duration-500 bg-size-200 bg-pos-0 hover:bg-pos-100 hover:shadow-neon-glow transform hover:-translate-y-1;
-  }
-  
-  @media (max-width: 640px) {
-    .cta-btn {
-      @apply px-6 py-3 text-base;
-    }
-    
-    .gaming-btn, .gaming-btn-outline {
-      @apply px-4 py-2;
-    }
   }
 }
 
@@ -130,27 +113,5 @@
   
   .clip-path-slant-reverse {
     clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 100%);
-  }
-  
-  /* Touch-friendly modifications */
-  .touch-target {
-    @apply min-h-[48px] min-w-[48px];
-  }
-  
-  /* Reduced motion preference support */
-  @media (prefers-reduced-motion: reduce) {
-    .animate-none-on-reduce {
-      animation: none !important;
-      transition: none !important;
-    }
-  }
-  
-  /* Improved spacing for mobile */
-  .px-mobile {
-    @apply px-4 sm:px-6 md:px-8;
-  }
-  
-  .py-mobile {
-    @apply py-4 sm:py-6 md:py-8;
   }
 }
