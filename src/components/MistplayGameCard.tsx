@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Star } from 'lucide-react';
+import { Star, Play } from 'lucide-react';
 
 interface MistplayGameCardProps {
   title: string;
@@ -43,6 +43,16 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
             <div className="absolute inset-0 bg-gradient-to-t from-gaming-dark via-transparent to-transparent opacity-90" />
             <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold ${popularityColors[popularity]}`}>
               {popularity}
+            </div>
+            
+            {/* Play Now Button */}
+            <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+              transition-all duration-500 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+              <button className="bg-gaming-accent hover:bg-gaming-accent/90 text-gaming-dark font-bold py-2 px-4 rounded-full 
+                flex items-center justify-center gap-2 shadow-lg">
+                <Play size={16} className="fill-gaming-dark" />
+                Play Now
+              </button>
             </div>
           </div>
           
