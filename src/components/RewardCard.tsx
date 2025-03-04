@@ -1,7 +1,6 @@
 
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Button } from './ui/button';
 
 interface RewardCardProps {
   title: string;
@@ -25,15 +24,9 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
     pink: 'text-gaming-pink'
   };
 
-  const buttonBgStyles = {
-    blue: 'bg-gaming-blue hover:bg-gaming-blue/90',
-    purple: 'bg-gaming-purple hover:bg-gaming-purple/90',
-    pink: 'bg-gaming-pink hover:bg-gaming-pink/90'
-  };
-
   return (
     <div 
-      className="responsive-card rounded-[20px] overflow-hidden transition-all duration-500 h-full transform"
+      className={`relative rounded-[28px] overflow-hidden transition-all duration-500 transform ${isHovered ? 'scale-[1.02]' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(true)}
@@ -48,27 +41,27 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
         className={`absolute inset-0 bg-gradient-to-r ${gradientStyles[glowColor]} opacity-0 ${isHovered ? 'opacity-100' : ''} transition-opacity duration-500 z-20`}
       />
       
-      <div className="relative p-4 sm:p-5 z-30 h-full flex flex-col justify-between">
+      <div className="relative p-6 sm:p-7 z-30 h-full flex flex-col justify-between">
         <div>
-          <h3 className={`font-display font-bold text-lg sm:text-xl mb-2 ${textStyles[glowColor]}`}>
+          <h3 className={`font-display font-bold text-2xl mb-3 ${textStyles[glowColor]}`}>
             {title}
           </h3>
-          <p className="text-xs sm:text-sm text-white/80 mb-3 line-clamp-3">
+          <p className="text-white/80 mb-4">
             {description}
           </p>
         </div>
         
-        <div className="mt-auto">
-          <div className="flex items-center justify-between bg-white/5 p-2 rounded-lg backdrop-blur-sm mb-3">
+        <div className="mt-4">
+          <div className="flex items-center justify-between bg-white/5 p-3 rounded-lg backdrop-blur-sm">
             <span className="text-xs text-white/50">Starting from</span>
-            <span className={`text-xs font-bold ${textStyles[glowColor]}`}>5,000 Units</span>
+            <span className={`text-sm font-bold ${textStyles[glowColor]}`}>5,000 Units</span>
           </div>
           
-          <Button 
-            className={`w-full py-2 text-sm ${buttonBgStyles[glowColor]} text-white font-medium transition-all duration-300`}
-          >
-            Play Now <ArrowRight size={14} className="ml-1" />
-          </Button>
+          <div className={`mt-4 flex justify-end ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
+            <div className={`w-10 h-10 rounded-full bg-${glowColor === 'blue' ? 'gaming-blue' : glowColor === 'purple' ? 'gaming-purple' : 'gaming-pink'}/10 flex items-center justify-center`}>
+              <ArrowRight className={textStyles[glowColor]} size={18} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
