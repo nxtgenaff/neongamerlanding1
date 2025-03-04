@@ -5,7 +5,6 @@ import RewardCard from '../components/RewardCard';
 import TestimonialCard from '../components/TestimonialCard';
 import GamingForm from '../components/GamingForm';
 import MistplayGameCard from '../components/MistplayGameCard';
-import Swipe3DCarousel from '../components/Swipe3DCarousel';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../components/ui/carousel';
 
 const Index = () => {
@@ -84,12 +83,6 @@ const Index = () => {
     game: "Rise of Kingdoms Player",
     avatar: "https://randomuser.me/api/portraits/men/55.jpg",
     quote: "I play games anyway, so getting rewarded for it is an awesome bonus!",
-    stars: 4
-  }, {
-    name: "Emma W.",
-    game: "Evony Player",
-    avatar: "https://randomuser.me/api/portraits/women/25.jpg",
-    quote: "It took about a month of casual play to earn my first $10 gift card. Totally worth it!",
     stars: 4
   }];
 
@@ -324,19 +317,31 @@ const Index = () => {
             </p>
           </div>
           
-          <Swipe3DCarousel>
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="embla__slide">
-                <TestimonialCard 
-                  name={testimonial.name} 
-                  game={testimonial.game} 
-                  avatar={testimonial.avatar} 
-                  quote={testimonial.quote} 
-                  stars={testimonial.stars} 
-                />
-              </div>
-            ))}
-          </Swipe3DCarousel>
+          <Carousel 
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <TestimonialCard 
+                    name={testimonial.name} 
+                    game={testimonial.game} 
+                    avatar={testimonial.avatar} 
+                    quote={testimonial.quote} 
+                    stars={testimonial.stars} 
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-6 gap-2">
+              <CarouselPrevious className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+              <CarouselNext className="relative static left-0 right-0 translate-y-0 bg-gaming-darker border-gaming-blue/30 hover:bg-gaming-darker/80" />
+            </div>
+          </Carousel>
           
           <div className="flex flex-wrap justify-center gap-6 mt-16">
             <div className="glass-panel px-5 py-3 flex items-center">

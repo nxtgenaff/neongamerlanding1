@@ -1,3 +1,4 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -116,169 +117,45 @@
 /* Carousel custom styles */
 .embla {
   overflow: hidden;
-  position: relative;
 }
 
 .embla__container {
   display: flex;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 .embla__slide {
   position: relative;
   flex: 0 0 100%;
-  padding: 0 12px;
 }
 
-/* Card Swipe Style - Stacked Cards Effect */
-.cards-swipe-container {
-  perspective: 1200px;
-  position: relative;
-  padding: 40px 0;
+@media (min-width: 768px) {
+  .embla__slide {
+    flex: 0 0 50%;
+  }
 }
 
-.cards-swipe-container .embla__slide {
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  will-change: transform, opacity, filter;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  border-radius: 28px;
-  overflow: visible;
+@media (min-width: 1024px) {
+  .embla__slide {
+    flex: 0 0 33.33%;
+  }
 }
 
-/* Enhanced stack effect for slides */
-.cards-swipe-container .embla__slide {
-  transform: scale(0.9) translateZ(-100px);
-  opacity: 0.5;
-  filter: blur(2px);
-}
-
-/* Previous slides enhanced effect */
-.cards-swipe-container .embla__slide[data-position="prev"] {
-  transform: translateX(-25%) scale(0.85) translateZ(-50px) rotateY(10deg);
-  opacity: 0.7;
-  filter: blur(1px);
-  z-index: 1;
-}
-
-/* Next slides enhanced effect */
-.cards-swipe-container .embla__slide[data-position="next"] {
-  transform: translateX(25%) scale(0.85) translateZ(-50px) rotateY(-10deg);
-  opacity: 0.7;
-  filter: blur(1px);
-  z-index: 1;
-}
-
-/* Current slide enhanced effect */
-.cards-swipe-container .embla__slide[data-position="current"] {
-  transform: translateX(0) scale(1) translateZ(0) rotateY(0);
-  opacity: 1;
-  filter: blur(0);
-  z-index: 5;
-}
-
-/* Enhanced card perspective */
-.perspective-1000 {
-  perspective: 1000px;
-  transform-style: preserve-3d;
-}
-
-.swipe-card {
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  will-change: transform, box-shadow;
-}
-
-.swipe-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: rgba(0, 0, 0, 0.25);
-  transform: translateZ(-20px);
-  filter: blur(30px);
-  border-radius: 28px;
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  opacity: 0;
-}
-
-.swipe-card:hover::before {
-  opacity: 1;
-  transform: translateZ(-40px) translateY(15px) scale(0.95);
-}
-
-.swipe-card-wrapper {
-  padding: 15px;
-  margin: -15px;
-}
-
-/* Enhanced carousel controls */
 .carousel-control {
-  background: rgba(25, 25, 35, 0.8);
-  border: 1px solid rgba(99, 123, 255, 0.4);
+  background: rgba(15, 15, 25, 0.7);
+  border: 1px solid rgba(79, 103, 255, 0.3);
   color: white;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(8px);
-  z-index: 30;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
 }
 
 .carousel-control:hover {
-  background: rgba(35, 35, 45, 0.95);
-  border-color: rgba(99, 123, 255, 0.8);
-  transform: scale(1.1);
-  box-shadow: 0 5px 20px rgba(99, 123, 255, 0.4);
+  background: rgba(25, 25, 35, 0.9);
+  border-color: rgba(79, 103, 255, 0.5);
 }
 
-.carousel-dots {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
-  z-index: 20;
-  position: relative;
-}
-
-.carousel-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.carousel-dot.active {
-  background-color: white;
-  transform: scale(1.3);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-/* Responsive adjustments */
-@media (max-width: 640px) {
-  .cards-swipe-container {
-    perspective: 800px;
-    padding: 20px 0;
-  }
-  
-  .carousel-control {
-    width: 36px;
-    height: 36px;
-    opacity: 0.8;
-  }
-  
-  .cards-swipe-container .embla__slide[data-position="prev"],
-  .cards-swipe-container .embla__slide[data-position="next"] {
-    opacity: 0.5;
-    transform: scale(0.8);
-  }
-}

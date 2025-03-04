@@ -1,6 +1,5 @@
 
 import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 
 interface RewardCardProps {
   title: string;
@@ -12,10 +11,10 @@ interface RewardCardProps {
 const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
-  const gradientStyles = {
-    blue: 'from-gaming-blue/20 via-gaming-blue/5 to-transparent',
-    purple: 'from-gaming-purple/20 via-gaming-purple/5 to-transparent',
-    pink: 'from-gaming-pink/20 via-gaming-pink/5 to-transparent'
+  const glowStyles = {
+    blue: 'shadow-neon-blue border-gaming-blue/30',
+    purple: 'shadow-neon-purple border-gaming-purple/30',
+    pink: 'shadow-neon-pink border-gaming-pink/30'
   };
   
   const textStyles = {
@@ -26,43 +25,35 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
 
   return (
     <div 
-      className={`relative rounded-[28px] overflow-hidden transition-all duration-500 transform ${isHovered ? 'scale-[1.02]' : ''}`}
+      className={`glass-panel p-5 transition-all duration-500 border ${
+        isHovered ? glowStyles[glowColor] : 'border-white/5'
+      } ${isHovered ? 'transform -translate-y-2' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={() => setIsHovered(true)}
-      onTouchEnd={() => setTimeout(() => setIsHovered(false), 300)}
     >
-      <div 
-        className="absolute inset-0 bg-cover bg-center z-0"
-        style={{ backgroundImage: `url(${image})` }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-gaming-dark via-gaming-dark/90 to-gaming-dark/70 z-10" />
-      <div 
-        className={`absolute inset-0 bg-gradient-to-r ${gradientStyles[glowColor]} opacity-0 ${isHovered ? 'opacity-100' : ''} transition-opacity duration-500 z-20`}
-      />
+      <div className="relative h-40 mb-4 overflow-hidden rounded-lg bg-gaming-darker">
+        <img 
+          src={image} 
+          alt={title} 
+          className="object-cover w-full h-full transition-transform duration-700 ease-in-out"
+          style={{
+            transform: isHovered ? 'scale(1.05)' : 'scale(1)'
+          }}
+        />
+        <div className={`absolute inset-0 opacity-0 ${
+          isHovered ? 'opacity-20' : ''
+        } transition-opacity duration-500 bg-${glowColor}-glow`} />
+      </div>
+      <h3 className={`font-display font-bold text-xl mb-2 ${textStyles[glowColor]}`}>
+        {title}
+      </h3>
+      <p className="text-sm text-white/70">
+        {description}
+      </p>
       
-      <div className="relative p-6 sm:p-7 z-30 h-full flex flex-col justify-between">
-        <div>
-          <h3 className={`font-display font-bold text-2xl mb-3 ${textStyles[glowColor]}`}>
-            {title}
-          </h3>
-          <p className="text-white/80 mb-4">
-            {description}
-          </p>
-        </div>
-        
-        <div className="mt-4">
-          <div className="flex items-center justify-between bg-white/5 p-3 rounded-lg backdrop-blur-sm">
-            <span className="text-xs text-white/50">Starting from</span>
-            <span className={`text-sm font-bold ${textStyles[glowColor]}`}>5,000 Units</span>
-          </div>
-          
-          <div className={`mt-4 flex justify-end ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-            <div className={`w-10 h-10 rounded-full bg-${glowColor === 'blue' ? 'gaming-blue' : glowColor === 'purple' ? 'gaming-purple' : 'gaming-pink'}/10 flex items-center justify-center`}>
-              <ArrowRight className={textStyles[glowColor]} size={18} />
-            </div>
-          </div>
-        </div>
+      <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
+        <span className="text-xs text-white/50">Starting from</span>
+        <span className={`text-sm font-bold ${textStyles[glowColor]}`}>5,000 Units</span>
       </div>
     </div>
   );
