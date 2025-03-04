@@ -1,6 +1,6 @@
 
 import { Star } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface TestimonialCardProps {
   name: string;
@@ -8,11 +8,33 @@ interface TestimonialCardProps {
   avatar: string;
   quote: string;
   stars: number;
+  isCurrent?: boolean;
+  position?: 'prev' | 'next' | 'current';
 }
 
-const TestimonialCard = ({ name, game, avatar, quote, stars }: TestimonialCardProps) => {
+const TestimonialCard = ({ 
+  name, 
+  game, 
+  avatar, 
+  quote, 
+  stars, 
+  isCurrent = false,
+  position
+}: TestimonialCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Set initial rotation based on card position
+  useEffect(() => {
+    if (position === 'prev') {
+      setRotation({ x: 0, y: -10 });
+    } else if (position === 'next') {
+      setRotation({ x: 0, y: 10 });
+    } else {
+      setRotation({ x: 0, y: 0 });
+    }
+  }, [position]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isHovered) return;
@@ -22,20 +44,55 @@ const TestimonialCard = ({ name, game, avatar, quote, stars }: TestimonialCardPr
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Calculate rotation (max 10deg)
-    const rotateY = ((x / rect.width) - 0.5) * 10;
-    const rotateX = ((y / rect.height) - 0.5) * -10;
+    setMousePosition({ x, y });
+    
+    // Calculate rotation (max 15deg)
+    const rotateY = ((x / rect.width) - 0.5) * 15;
+    const rotateX = ((y / rect.height) - 0.5) * -15;
     
     setRotation({ x: rotateX, y: rotateY });
   };
 
   const resetRotation = () => {
-    setRotation({ x: 0, y: 0 });
+    // Reset to position-based rotation instead of flat
+    if (position === 'prev') {
+      setRotation({ x: 0, y: -10 });
+    } else if (position === 'next') {
+      setRotation({ x: 0, y: 10 });
+    } else {
+      setRotation({ x: 0, y: 0 });
+    }
+  };
+
+  // Calculate dynamic shadow based on mouse position
+  const getShadowStyle = () => {
+    if (!isHovered) return {};
+    
+    const shadowX = (mousePosition.x / 100) - 0.5;
+    const shadowY = (mousePosition.y / 100) - 0.5;
+    
+    return {
+      boxShadow: `
+        ${shadowX * 20}px ${shadowY * 20}px 25px rgba(0,0,0,0.2),
+        0 10px 10px rgba(0,0,0,0.1)
+      `
+    };
+  };
+
+  // Calculate z-index and scale based on position
+  const getPositionStyles = () => {
+    if (position === 'current') {
+      return 'z-30 scale-100';
+    } else if (position === 'prev' || position === 'next') {
+      return 'z-20 scale-[0.95] opacity-70';
+    } else {
+      return 'z-10 scale-[0.9] opacity-50';
+    }
   };
 
   return (
     <div 
-      className="swipe-card-wrapper perspective-1000"
+      className={`swipe-card-wrapper perspective-1000 transition-all duration-700 ${getPositionStyles()}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
@@ -48,10 +105,11 @@ const TestimonialCard = ({ name, game, avatar, quote, stars }: TestimonialCardPr
       }}
     >
       <div 
-        className={`relative rounded-[20px] sm:rounded-[28px] overflow-hidden transition-transform duration-500 bg-gradient-to-br from-gaming-darker to-gaming-dark border border-white/5 swipe-card transform ${isHovered ? 'scale-[1.02] z-20' : ''}`}
+        className={`relative rounded-[20px] sm:rounded-[28px] overflow-hidden transition-all duration-500 bg-gradient-to-br from-gaming-darker to-gaming-dark border border-white/5 swipe-card transform ${isHovered ? 'scale-[1.02]' : ''}`}
         style={{ 
           transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-          transformStyle: 'preserve-3d'
+          transformStyle: 'preserve-3d',
+          ...getShadowStyle()
         }}
         onMouseMove={handleMouseMove}
       >
@@ -90,6 +148,15 @@ const TestimonialCard = ({ name, game, avatar, quote, stars }: TestimonialCardPr
         
         <div 
           className={`absolute inset-0 bg-gradient-to-br from-gaming-blue/5 via-gaming-purple/5 to-gaming-pink/5 opacity-0 ${isHovered ? 'opacity-100' : ''} transition-opacity duration-500`}
+        />
+
+        {/* 3D lighting effects */}
+        <div 
+          className={`absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 ${isHovered ? 'opacity-20' : ''} transition-opacity duration-500`}
+          style={{ 
+            transform: 'translateZ(20px)', 
+            transformStyle: 'preserve-3d' 
+          }}
         />
       </div>
     </div>

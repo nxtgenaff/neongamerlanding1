@@ -133,187 +133,61 @@
 
 /* Card Swipe Style - Stacked Cards Effect */
 .cards-swipe-container {
-  perspective: 1000px;
+  perspective: 1200px;
   position: relative;
+  padding: 40px 0;
 }
 
 .cards-swipe-container .embla__slide {
-  transition: transform 0.4s ease, opacity 0.4s ease, z-index 0s;
-  margin-right: -10%;
-  will-change: transform, opacity;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform, opacity, filter;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   border-radius: 28px;
   overflow: visible;
 }
 
-/* Stack effect for non-active slides */
-.cards-swipe-container .embla__slide:not(.is-current) {
-  transform: translateX(-5%) scale(0.95) rotateY(-5deg);
-  opacity: 0.7;
-  z-index: 0;
-}
-
-/* Previous slides stack effect */
-.cards-swipe-container .embla__slide.is-prev {
-  transform: translateX(-20%) scale(0.9) rotateY(-10deg);
+/* Enhanced stack effect for slides */
+.cards-swipe-container .embla__slide {
+  transform: scale(0.9) translateZ(-100px);
   opacity: 0.5;
-  z-index: -1;
+  filter: blur(2px);
 }
 
-/* Next slides stack effect */
-.cards-swipe-container .embla__slide.is-next {
-  transform: translateX(10%) scale(0.9) rotateY(10deg);
+/* Previous slides enhanced effect */
+.cards-swipe-container .embla__slide[data-position="prev"] {
+  transform: translateX(-25%) scale(0.85) translateZ(-50px) rotateY(10deg);
   opacity: 0.7;
-  z-index: 0;
-}
-
-/* Current slide effect */
-.cards-swipe-container .embla__slide.is-current {
-  transform: translateX(0) scale(1) rotateY(0);
-  opacity: 1;
+  filter: blur(1px);
   z-index: 1;
 }
 
-@media (min-width: 640px) {
-  .embla__slide {
-    flex: 0 0 70%;
-    padding: 0 16px;
-  }
-  
-  .cards-swipe-container .embla__slide {
-    margin-right: -5%;
-  }
+/* Next slides enhanced effect */
+.cards-swipe-container .embla__slide[data-position="next"] {
+  transform: translateX(25%) scale(0.85) translateZ(-50px) rotateY(-10deg);
+  opacity: 0.7;
+  filter: blur(1px);
+  z-index: 1;
 }
 
-@media (min-width: 768px) {
-  .embla__slide {
-    flex: 0 0 50%;
-    padding: 0 20px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .embla__slide {
-    flex: 0 0 33.33%;
-  }
-}
-
-.carousel-control {
-  background: rgba(15, 15, 25, 0.7);
-  border: 1px solid rgba(79, 103, 255, 0.3);
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(4px);
-  z-index: 20;
-}
-
-.carousel-control:hover {
-  background: rgba(25, 25, 35, 0.9);
-  border-color: rgba(79, 103, 255, 0.5);
-  transform: scale(1.1);
-}
-
-.carousel-prev,
-.carousel-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.carousel-prev {
-  left: 10px;
-}
-
-.carousel-next {
-  right: 10px;
-}
-
-/* Pagination dots for swipe carousel */
-.carousel-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 20px;
-}
-
-.carousel-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.carousel-dot.active {
-  background-color: white;
-  transform: scale(1.3);
-}
-
-/* Card hover effects */
-.card-gradient-border {
-  position: relative;
-}
-
-.card-gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 28px;
-  padding: 1.5px;
-  background: linear-gradient(140deg, rgba(0, 240, 255, 0.6), rgba(157, 78, 221, 0.6), rgba(255, 42, 109, 0.6));
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-/* Improved card styles */
-.fluid-card {
-  border-radius: 28px;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  position: relative;
-}
-
-.fluid-card-image {
-  transition: transform 0.8s ease;
-}
-
-.fluid-card:hover .fluid-card-image {
-  transform: scale(1.1);
-}
-
-.fluid-card:hover .card-gradient-border::before {
+/* Current slide enhanced effect */
+.cards-swipe-container .embla__slide[data-position="current"] {
+  transform: translateX(0) scale(1) translateZ(0) rotateY(0);
   opacity: 1;
+  filter: blur(0);
+  z-index: 5;
 }
 
-/* 3D Card Swipe Effects */
+/* Enhanced card perspective */
 .perspective-1000 {
   perspective: 1000px;
   transform-style: preserve-3d;
-  position: relative;
 }
 
 .swipe-card {
   backface-visibility: hidden;
   transform-style: preserve-3d;
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform, box-shadow;
 }
 
 .swipe-card::before {
@@ -321,36 +195,90 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(0, 0, 0, 0.15);
-  transform: translateZ(-10px);
-  filter: blur(20px);
+  background: rgba(0, 0, 0, 0.25);
+  transform: translateZ(-20px);
+  filter: blur(30px);
   border-radius: 28px;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   opacity: 0;
 }
 
 .swipe-card:hover::before {
   opacity: 1;
-  transform: translateZ(-30px) translateY(10px) scale(0.95);
+  transform: translateZ(-40px) translateY(15px) scale(0.95);
 }
 
 .swipe-card-wrapper {
-  padding: 10px;
-  margin: -10px;
+  padding: 15px;
+  margin: -15px;
 }
 
-/* Optimize animations for mobile */
+/* Enhanced carousel controls */
+.carousel-control {
+  background: rgba(25, 25, 35, 0.8);
+  border: 1px solid rgba(99, 123, 255, 0.4);
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  z-index: 30;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-control:hover {
+  background: rgba(35, 35, 45, 0.95);
+  border-color: rgba(99, 123, 255, 0.8);
+  transform: scale(1.1);
+  box-shadow: 0 5px 20px rgba(99, 123, 255, 0.4);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+  z-index: 20;
+  position: relative;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.carousel-dot.active {
+  background-color: white;
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive adjustments */
 @media (max-width: 640px) {
+  .cards-swipe-container {
+    perspective: 800px;
+    padding: 20px 0;
+  }
+  
   .carousel-control {
     width: 36px;
     height: 36px;
+    opacity: 0.8;
   }
   
-  .cards-swipe-container .embla__slide {
-    margin-right: 0;
-  }
-  
-  .cards-swipe-container .embla__slide:not(.is-current) {
-    transform: translateX(-2%) scale(0.95);
+  .cards-swipe-container .embla__slide[data-position="prev"],
+  .cards-swipe-container .embla__slide[data-position="next"] {
+    opacity: 0.5;
+    transform: scale(0.8);
   }
 }
