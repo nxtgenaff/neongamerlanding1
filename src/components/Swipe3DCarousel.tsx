@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import useEmblaCarousel, { EmblaCarouselType } from 'embla-carousel-react';
+import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react';
 
 interface Swipe3DCarouselProps {
   children: React.ReactNode[];
@@ -60,7 +59,6 @@ const Swipe3DCarousel = ({
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
   const scrollTo = useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
 
-  // Apply position-based props to children
   const renderChildren = () => {
     return React.Children.map(children, (child, index) => {
       let position: 'prev' | 'current' | 'next' | undefined;
