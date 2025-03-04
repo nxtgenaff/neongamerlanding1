@@ -8,9 +8,10 @@ interface MistplayGameCardProps {
   points: number;
   image: string;
   popularity: 'Hot' | 'Trending' | 'Popular' | 'New';
+  link?: string;
 }
 
-const MistplayGameCard = ({ title, genre, points, image, popularity }: MistplayGameCardProps) => {
+const MistplayGameCard = ({ title, genre, points, image, popularity, link }: MistplayGameCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
   const popularityColors = {
@@ -21,17 +22,21 @@ const MistplayGameCard = ({ title, genre, points, image, popularity }: MistplayG
   };
 
   return (
-    <div 
-      className={`glass-panel transition-all duration-500 border border-white/5 rounded-lg overflow-hidden ${isHovered ? 'shadow-neon-blue transform -translate-y-2' : ''}`}
+    <a 
+      href={link || "#"}
+      className={`glass-panel transition-all duration-300 border border-white/5 rounded-lg overflow-hidden block ${isHovered ? 'shadow-neon-blue transform -translate-y-1 md:-translate-y-2' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setTimeout(() => setIsHovered(false), 300)}
     >
       <div className="relative">
-        <div className="h-40 overflow-hidden">
+        <div className="h-36 sm:h-40 overflow-hidden">
           <img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-700 ease-in-out"
+            className="w-full h-full object-cover transition-transform duration-300 ease-in-out"
+            loading="lazy"
             style={{
               transform: isHovered ? 'scale(1.05)' : 'scale(1)'
             }}
@@ -43,9 +48,9 @@ const MistplayGameCard = ({ title, genre, points, image, popularity }: MistplayG
         </div>
       </div>
       
-      <div className="p-4">
-        <h3 className="font-display font-bold text-lg text-white mb-1">{title}</h3>
-        <p className="text-xs text-white/50 mb-3">{genre}</p>
+      <div className="p-3 sm:p-4">
+        <h3 className="font-display font-bold text-base sm:text-lg text-white mb-1 line-clamp-1">{title}</h3>
+        <p className="text-xs text-white/50 mb-2 sm:mb-3">{genre}</p>
         
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -55,7 +60,7 @@ const MistplayGameCard = ({ title, genre, points, image, popularity }: MistplayG
           <div className="text-gaming-accent font-bold text-sm">{points} Units</div>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 

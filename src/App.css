@@ -1,8 +1,16 @@
+
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  #root {
+    padding: 2rem;
+  }
 }
 
 .logo {
@@ -39,4 +47,70 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .glass-panel {
+    transition: all 0.2s ease;
+    padding: 1rem;
+  }
+  
+  .cta-btn, .gaming-btn-outline {
+    width: 100%;
+    justify-content: center;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  .section-spacing {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+/* Sticky CTA for mobile */
+.sticky-cta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sticky-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(5, 5, 8, 0.9);
+    backdrop-filter: blur(8px);
+    padding: 0.75rem 1rem;
+    z-index: 50;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Optimize animations for mobile */
+@media (max-width: 640px) {
+  .animate-gradient-flow {
+    animation-duration: 8s;
+  }
+  
+  .animate-shimmer {
+    animation-duration: 3s;
+  }
 }
