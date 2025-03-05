@@ -21,14 +21,24 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
     'New': 'bg-gaming-accent text-gaming-dark'
   };
 
+  // Handle touch events for mobile
+  const handleTouchStart = () => {
+    setIsHovered(true);
+  };
+  
+  const handleTouchEnd = () => {
+    // Slight delay to allow for tapping the button
+    setTimeout(() => setIsHovered(false), 500);
+  };
+
   return (
     <a 
       href={link || "#"}
-      className={`glass-panel transition-all duration-300 border border-white/5 rounded-lg overflow-hidden block ${isHovered ? 'shadow-neon-blue transform -translate-y-1 md:-translate-y-2' : ''}`}
+      className="glass-panel transition-all duration-300 border border-white/5 rounded-lg overflow-hidden block"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={() => setIsHovered(true)}
-      onTouchEnd={() => setTimeout(() => setIsHovered(false), 300)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="relative">
         {/* Larger image area */}
@@ -43,35 +53,35 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
             }}
           />
           
-          {/* Play Now button that appears on hover */}
+          {/* Play Now button that appears on hover/touch */}
           <div 
             className={`absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-300 ${
               isHovered ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <button className="bg-gaming-blue hover:bg-gaming-purple text-white font-display font-bold py-2 px-4 rounded-full flex items-center transition-all duration-300 transform hover:scale-105">
-              <Play size={18} className="mr-1 fill-white" />
+            <button className="bg-gaming-blue hover:bg-gaming-purple text-white font-display font-bold py-3 px-6 rounded-full flex items-center transition-all duration-300 transform hover:scale-105 touch-target">
+              <Play size={20} className="mr-2 fill-white" />
               Play Now
             </button>
           </div>
         </div>
         
-        <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold ${popularityColors[popularity]}`}>
+        <div className={`absolute top-2 right-2 px-3 py-1 rounded-full text-xs font-bold ${popularityColors[popularity]}`}>
           {popularity}
         </div>
       </div>
       
       {/* Smaller content area at the bottom */}
-      <div className="p-3 sm:p-4">
-        <h3 className="font-display font-bold text-base sm:text-lg text-white mb-1 line-clamp-1">{title}</h3>
-        <p className="text-xs text-white/50 mb-2 sm:mb-3">{genre}</p>
+      <div className="p-4">
+        <h3 className="font-display font-bold text-lg text-white mb-1 line-clamp-1">{title}</h3>
+        <p className="text-sm text-white/50 mb-3">{genre}</p>
         
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Star size={14} className="text-gaming-accent fill-gaming-accent mr-1" />
-            <span className="text-xs text-white/70">Earn up to</span>
+            <Star size={16} className="text-gaming-accent fill-gaming-accent mr-1" />
+            <span className="text-sm text-white/70">Earn up to</span>
           </div>
-          <div className="text-gaming-accent font-bold text-sm">{points} Units</div>
+          <div className="text-gaming-accent font-bold">{points} Units</div>
         </div>
       </div>
     </a>
