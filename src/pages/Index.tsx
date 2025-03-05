@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Trophy, Gamepad, Diamond, ArrowRight, Star, Shield } from 'lucide-react';
 import CountdownTimer from '../components/CountdownTimer';
@@ -6,126 +5,111 @@ import RewardCard from '../components/RewardCard';
 import TestimonialCard from '../components/TestimonialCard';
 import GamingForm from '../components/GamingForm';
 import MistplayGameCard from '../components/MistplayGameCard';
-
 const Index = () => {
   const [showBanner, setShowBanner] = useState(false);
-  const [recentWinner, setRecentWinner] = useState({ name: '', prize: '' });
+  const [recentWinner, setRecentWinner] = useState({
+    name: '',
+    prize: ''
+  });
   const [showWinner, setShowWinner] = useState(false);
-
   useEffect(() => {
     const bannerTimer = setTimeout(() => {
       setShowBanner(true);
     }, 3000);
-
-    const winners = [
-      { name: 'Alex89', prize: '5000 Units' },
-      { name: 'GamerQueen', prize: '$15 Amazon Gift Card' },
-      { name: 'FrostySniper', prize: '$25 PayPal Credit' },
-      { name: 'EliteGamer22', prize: '10000 Units' }
-    ];
-
+    const winners = [{
+      name: 'Alex89',
+      prize: '5000 Units'
+    }, {
+      name: 'GamerQueen',
+      prize: '$15 Amazon Gift Card'
+    }, {
+      name: 'FrostySniper',
+      prize: '$25 PayPal Credit'
+    }, {
+      name: 'EliteGamer22',
+      prize: '10000 Units'
+    }];
     const winnerInterval = setInterval(() => {
       if (Date.now() - pageLoadTime > 5000) {
         const randomWinner = winners[Math.floor(Math.random() * winners.length)];
         setRecentWinner(randomWinner);
         setShowWinner(true);
-
         setTimeout(() => {
           setShowWinner(false);
         }, 4000);
       }
     }, 15000);
-
     const pageLoadTime = Date.now();
-
     return () => {
       clearTimeout(bannerTimer);
       clearInterval(winnerInterval);
     };
   }, []);
-
-  const rewards = [
-    {
-      title: "Gift Cards",
-      description: "Convert your Mistplay Units to gift cards from Amazon, Google Play, and more.",
-      image: "/lovable-uploads/b88d5754-2c2b-4140-8f36-00efa0377ad4.png",
-      glowColor: "blue" as const
-    },
-    {
-      title: "PayPal Cash",
-      description: "Turn your gaming sessions into real money sent directly to your PayPal account.",
-      image: "/lovable-uploads/427dfe4c-e058-4d37-bb8d-ab6e3cddb7f2.png",
-      glowColor: "purple" as const
-    },
-    {
-      title: "Premium Units",
-      description: "Earn bonus Units with special offers and promotions for faster rewards.",
-      image: "/lovable-uploads/ea4be6c1-93b5-4369-b924-69575ff3ee09.png", 
-      glowColor: "pink" as const
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: "Michael R.",
-      game: "Coin Master Player",
-      avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-      quote: "I've earned over $50 in Amazon gift cards just playing games I actually enjoy!",
-      stars: 5
-    },
-    {
-      name: "Sarah K.",
-      game: "Bingo Blitz Player",
-      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-      quote: "Mistplay is legit! Got my first PayPal cash out within two weeks of playing.",
-      stars: 5
-    },
-    {
-      name: "Jason T.",
-      game: "Rise of Kingdoms Player",
-      avatar: "https://randomuser.me/api/portraits/men/55.jpg",
-      quote: "I play games anyway, so getting rewarded for it is an awesome bonus!",
-      stars: 4
-    }
-  ];
-
-  const mistplayGames = [
-    {
-      title: "Coin Master",
-      genre: "Casual",
-      points: 4500,
-      image: "/lovable-uploads/7db38f96-9357-40e1-8f04-2432bfa1ddc6.png",
-      popularity: "Hot" as const,
-      link: "https://areyourealhuman.com/cl/i/6d4ow7"
-    },
-    {
-      title: "Rise of Kingdoms",
-      genre: "Strategy",
-      points: 5200,
-      image: "/lovable-uploads/e4dffdcd-eb70-400b-bcd4-90d266036b06.png",
-      popularity: "Trending" as const,
-      link: "https://areyourealhuman.com/cl/i/6d4ow7"
-    },
-    {
-      title: "Bingo Blitz",
-      genre: "Casino",
-      points: 3800,
-      image: "/lovable-uploads/8e0765fb-cde1-40da-b755-5ed145f143cf.png",
-      popularity: "Popular" as const,
-      link: "https://areyourealhuman.com/cl/i/6d4ow7"
-    },
-    {
-      title: "Evony",
-      genre: "Strategy",
-      points: 6000,
-      image: "/lovable-uploads/b07ac3a2-04de-4724-888d-561f3f91143a.png",
-      popularity: "Hot" as const,
-      link: "https://areyourealhuman.com/cl/i/6d4ow7"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gaming-dark overflow-hidden">
+  const rewards = [{
+    title: "Gift Cards",
+    description: "Convert your Mistplay Units to gift cards from Amazon, Google Play, and more.",
+    image: "/lovable-uploads/b88d5754-2c2b-4140-8f36-00efa0377ad4.png",
+    glowColor: "blue" as const
+  }, {
+    title: "PayPal Cash",
+    description: "Turn your gaming sessions into real money sent directly to your PayPal account.",
+    image: "/lovable-uploads/427dfe4c-e058-4d37-bb8d-ab6e3cddb7f2.png",
+    glowColor: "purple" as const
+  }, {
+    title: "Premium Units",
+    description: "Earn bonus Units with special offers and promotions for faster rewards.",
+    image: "/lovable-uploads/ea4be6c1-93b5-4369-b924-69575ff3ee09.png",
+    glowColor: "pink" as const
+  }];
+  const testimonials = [{
+    name: "Michael R.",
+    game: "Coin Master Player",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    quote: "I've earned over $50 in Amazon gift cards just playing games I actually enjoy!",
+    stars: 5
+  }, {
+    name: "Sarah K.",
+    game: "Bingo Blitz Player",
+    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    quote: "Mistplay is legit! Got my first PayPal cash out within two weeks of playing.",
+    stars: 5
+  }, {
+    name: "Jason T.",
+    game: "Rise of Kingdoms Player",
+    avatar: "https://randomuser.me/api/portraits/men/55.jpg",
+    quote: "I play games anyway, so getting rewarded for it is an awesome bonus!",
+    stars: 4
+  }];
+  const mistplayGames = [{
+    title: "Coin Master",
+    genre: "Casual",
+    points: 4500,
+    image: "/lovable-uploads/7db38f96-9357-40e1-8f04-2432bfa1ddc6.png",
+    popularity: "Hot" as const,
+    link: "https://areyourealhuman.com/cl/i/6d4ow7"
+  }, {
+    title: "Rise of Kingdoms",
+    genre: "Strategy",
+    points: 5200,
+    image: "/lovable-uploads/e4dffdcd-eb70-400b-bcd4-90d266036b06.png",
+    popularity: "Trending" as const,
+    link: "https://areyourealhuman.com/cl/i/6d4ow7"
+  }, {
+    title: "Bingo Blitz",
+    genre: "Casino",
+    points: 3800,
+    image: "/lovable-uploads/8e0765fb-cde1-40da-b755-5ed145f143cf.png",
+    popularity: "Popular" as const,
+    link: "https://areyourealhuman.com/cl/i/6d4ow7"
+  }, {
+    title: "Evony",
+    genre: "Strategy",
+    points: 6000,
+    image: "/lovable-uploads/b07ac3a2-04de-4724-888d-561f3f91143a.png",
+    popularity: "Hot" as const,
+    link: "https://areyourealhuman.com/cl/i/6d4ow7"
+  }];
+  return <div className="min-h-screen bg-gaming-dark overflow-hidden">
       <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 py-16 md:py-20 bg-hero-pattern">
         <div className="absolute inset-0 bg-gaming-dark/30 backdrop-blur-[2px]"></div>
         
@@ -169,11 +153,7 @@ const Index = () => {
                 </div>
                 
                 <div className="relative h-64 md:h-80 mb-4 overflow-hidden rounded-lg">
-                  <img 
-                    src="/lovable-uploads/9d8e7357-5583-43f6-9e69-102cf9265fef.png" 
-                    alt="Mistplay Rewards" 
-                    className="object-cover w-full h-full transition-transform duration-700 ease-in-out hover:scale-105"
-                  />
+                  <img src="/lovable-uploads/9d8e7357-5583-43f6-9e69-102cf9265fef.png" alt="Mistplay Rewards" className="object-cover w-full h-full transition-transform duration-700 ease-in-out hover:scale-105" />
                 </div>
                 
                 <div className="flex items-center justify-between bg-gaming-darker p-3 rounded-lg">
@@ -202,10 +182,8 @@ const Index = () => {
         </div>
         
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-          <span className="text-white/50 text-sm mb-2">Scroll to see games</span>
-          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-1">
-            <div className="w-1 h-2 bg-white/60 rounded-full animate-bounce"></div>
-          </div>
+          
+          
         </div>
       </section>
       
@@ -226,17 +204,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-4 gap-6">
-            {mistplayGames.map((game, index) => (
-              <MistplayGameCard 
-                key={index}
-                title={game.title}
-                genre={game.genre}
-                points={game.points}
-                image={game.image}
-                popularity={game.popularity}
-                link={game.link}
-              />
-            ))}
+            {mistplayGames.map((game, index) => <MistplayGameCard key={index} title={game.title} genre={game.genre} points={game.points} image={game.image} popularity={game.popularity} link={game.link} />)}
           </div>
           
           <div className="mt-16 text-center">
@@ -270,15 +238,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {rewards.map((reward, index) => (
-              <RewardCard 
-                key={index}
-                title={reward.title}
-                description={reward.description}
-                image={reward.image}
-                glowColor={reward.glowColor}
-              />
-            ))}
+            {rewards.map((reward, index) => <RewardCard key={index} title={reward.title} description={reward.description} image={reward.image} glowColor={reward.glowColor} />)}
           </div>
           
           <div className="mt-16 text-center">
@@ -307,16 +267,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard 
-                key={index}
-                name={testimonial.name}
-                game={testimonial.game}
-                avatar={testimonial.avatar}
-                quote={testimonial.quote}
-                stars={testimonial.stars}
-              />
-            ))}
+            {testimonials.map((testimonial, index) => <TestimonialCard key={index} name={testimonial.name} game={testimonial.game} avatar={testimonial.avatar} quote={testimonial.quote} stars={testimonial.stars} />)}
           </div>
           
           <div className="flex flex-wrap justify-center gap-6 mt-16">
@@ -399,8 +350,7 @@ const Index = () => {
         </div>
       </footer>
       
-      {showWinner && (
-        <div className="fixed bottom-5 left-5 glass-panel p-4 animate-fade-in z-50 max-w-xs border border-gaming-blue/20 shadow-neon-blue">
+      {showWinner && <div className="fixed bottom-5 left-5 glass-panel p-4 animate-fade-in z-50 max-w-xs border border-gaming-blue/20 shadow-neon-blue">
           <div className="flex items-center">
             <div className="w-10 h-10 bg-gaming-blue/20 rounded-full flex items-center justify-center mr-3">
               <Trophy size={20} className="text-gaming-blue" />
@@ -410,30 +360,22 @@ const Index = () => {
               <p className="text-xs text-gaming-blue">{recentWinner.prize}</p>
             </div>
           </div>
-        </div>
-      )}
+        </div>}
       
-      {showBanner && (
-        <div className="fixed top-0 left-0 w-full bg-gradient-to-r from-gaming-blue to-gaming-purple py-2 px-4 z-50 flex items-center justify-center">
+      {showBanner && <div className="fixed top-0 left-0 w-full bg-gradient-to-r from-gaming-blue to-gaming-purple py-2 px-4 z-50 flex items-center justify-center">
           <p className="text-sm text-black font-medium">
             🔥 New User Bonus! Register today for 500 extra Units!
           </p>
-          <button 
-            onClick={() => setShowBanner(false)} 
-            className="ml-4 text-black/70 hover:text-black"
-          >
+          <button onClick={() => setShowBanner(false)} className="ml-4 text-black/70 hover:text-black">
             ✕
           </button>
-        </div>
-      )}
+        </div>}
       
       <div className="sticky-cta">
         <a href="https://areyourealhuman.com/cl/i/6d4ow7" className="cta-btn w-full text-sm">
           START EARNING NOW <ArrowRight size={16} className="ml-2" />
         </a>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
