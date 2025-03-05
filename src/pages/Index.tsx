@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Trophy, Gamepad, Diamond, ArrowRight, Star, Shield } from 'lucide-react';
 import CountdownTimer from '../components/CountdownTimer';
@@ -47,19 +48,19 @@ const Index = () => {
     {
       title: "Gift Cards",
       description: "Convert your Mistplay Units to gift cards from Amazon, Google Play, and more.",
-      image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=800&q=80",
+      image: "/lovable-uploads/b88d5754-2c2b-4140-8f36-00efa0377ad4.png",
       glowColor: "blue" as const
     },
     {
       title: "PayPal Cash",
       description: "Turn your gaming sessions into real money sent directly to your PayPal account.",
-      image: "https://images.unsplash.com/photo-1580048915913-4f8f5cb481c4?auto=format&fit=crop&w=800&q=80",
+      image: "/lovable-uploads/427dfe4c-e058-4d37-bb8d-ab6e3cddb7f2.png",
       glowColor: "purple" as const
     },
     {
       title: "Premium Units",
       description: "Earn bonus Units with special offers and promotions for faster rewards.",
-      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80", 
+      image: "/lovable-uploads/ea4be6c1-93b5-4369-b924-69575ff3ee09.png", 
       glowColor: "pink" as const
     }
   ];
