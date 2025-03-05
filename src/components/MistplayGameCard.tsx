@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { Star, Play } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 interface MistplayGameCardProps {
   title: string;
@@ -34,7 +35,10 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
   return (
     <a 
       href={link || "#"}
-      className="glass-panel transition-all duration-300 border border-white/5 rounded-lg overflow-hidden block"
+      className={cn(
+        "glass-panel transition-all duration-300 border border-white/5 rounded-lg overflow-hidden block",
+        isHovered && "neon-border shadow-neon-glow"
+      )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
