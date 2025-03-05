@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Star } from 'lucide-react';
+import { Star, Play } from 'lucide-react';
 
 interface MistplayGameCardProps {
   title: string;
@@ -31,7 +31,8 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
       onTouchEnd={() => setTimeout(() => setIsHovered(false), 300)}
     >
       <div className="relative">
-        <div className="h-36 sm:h-40 overflow-hidden">
+        {/* Larger image area */}
+        <div className="h-48 sm:h-52 overflow-hidden">
           <img 
             src={image} 
             alt={title} 
@@ -41,6 +42,18 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
               transform: isHovered ? 'scale(1.05)' : 'scale(1)'
             }}
           />
+          
+          {/* Play Now button that appears on hover */}
+          <div 
+            className={`absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-300 ${
+              isHovered ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <button className="bg-gaming-blue hover:bg-gaming-purple text-white font-display font-bold py-2 px-4 rounded-full flex items-center transition-all duration-300 transform hover:scale-105">
+              <Play size={18} className="mr-1 fill-white" />
+              Play Now
+            </button>
+          </div>
         </div>
         
         <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold ${popularityColors[popularity]}`}>
@@ -48,6 +61,7 @@ const MistplayGameCard = ({ title, genre, points, image, popularity, link }: Mis
         </div>
       </div>
       
+      {/* Smaller content area at the bottom */}
       <div className="p-3 sm:p-4">
         <h3 className="font-display font-bold text-base sm:text-lg text-white mb-1 line-clamp-1">{title}</h3>
         <p className="text-xs text-white/50 mb-2 sm:mb-3">{genre}</p>
