@@ -114,3 +114,18 @@
     animation-duration: 3s;
   }
 }
+
+/* Touch improvements */
+.touch-target {
+  touch-action: manipulation;
+}
+
+.touch-pan-y {
+  touch-action: pan-y;
+}
+
+/* Disable pull-to-refresh on mobile */
+html, body {
+  overscroll-behavior-y: contain;
+}
+

@@ -1,5 +1,5 @@
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Star, Download, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -13,6 +13,8 @@ interface MistplayGameCardProps {
   downloads?: string;
   rating?: number;
   link?: string;
+  onSwipeLeft?: () => void;
+  onSwipeRight?: () => void;
 }
 
 const MistplayGameCard = ({ 
@@ -24,11 +26,14 @@ const MistplayGameCard = ({
   description,
   downloads = "100M+",
   rating = 4.5,
-  link 
+  link,
+  onSwipeLeft,
+  onSwipeRight
 }: MistplayGameCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isSwiping, setIsSwiping] = useState(false);
   const cardRef = useRef<HTMLAnchorElement>(null);
   
   // Minimum swipe distance to register as swipe
@@ -49,15 +54,25 @@ const MistplayGameCard = ({
     setIsHovered(true);
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
+    setIsSwiping(false);
   };
   
   const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEnd(e.targetTouches[0].clientX);
+    
+    // If the touch has moved more than a small threshold, consider it a swipe
+    if (touchStart && Math.abs(touchStart - e.targetTouches[0].clientX) > 10) {
+      setIsSwiping(true);
+    }
   };
   
   const handleTouchEnd = () => {
-    // Slight delay to allow for tapping the button
-    setTimeout(() => setIsHovered(false), 500);
+    // Slight delay to allow for tapping the button, but only if not swiping
+    if (!isSwiping) {
+      setTimeout(() => setIsHovered(false), 500);
+    } else {
+      setIsHovered(false);
+    }
     
     if (!touchStart || !touchEnd) return;
     
@@ -65,21 +80,43 @@ const MistplayGameCard = ({
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
     
-    if (isLeftSwipe) {
-      // Handle left swipe - could trigger next card
-      console.log('Swiped left');
+    if (isLeftSwipe && onSwipeLeft) {
+      onSwipeLeft();
     }
     
-    if (isRightSwipe) {
-      // Handle right swipe - could trigger previous card
-      console.log('Swiped right');
+    if (isRightSwipe && onSwipeRight) {
+      onSwipeRight();
     }
+    
+    // Reset swiping state
+    setIsSwiping(false);
   };
+
+  // Prevent default behavior for touch events to avoid page scrolling during swipe
+  useEffect(() => {
+    const card = cardRef.current;
+    
+    const preventDefaultTouch = (e: TouchEvent) => {
+      if (isSwiping) {
+        e.preventDefault();
+      }
+    };
+    
+    if (card) {
+      card.addEventListener('touchmove', preventDefaultTouch, { passive: false });
+    }
+    
+    return () => {
+      if (card) {
+        card.removeEventListener('touchmove', preventDefaultTouch);
+      }
+    };
+  }, [isSwiping]);
 
   return (
     <a 
       ref={cardRef}
-      href={link || "#"}
+      href={isSwiping ? undefined : (link || "#")}
       className={cn(
         "glass-panel transition-all duration-300 border border-white/5 rounded-2xl overflow-hidden block max-w-[320px] shadow-lg",
         isHovered && "neon-border shadow-neon-glow"
@@ -89,6 +126,11 @@ const MistplayGameCard = ({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onClick={(e) => {
+        if (isSwiping) {
+          e.preventDefault();
+        }
+      }}
     >
       <div className="relative">
         {/* Main image area */}

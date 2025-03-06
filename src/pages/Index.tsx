@@ -156,15 +156,19 @@ const Index = () => {
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
 
   const handleCarouselTouchStart = (e: React.TouchEvent) => {
+    e.stopPropagation();
     setTouchEndX(null);
     setTouchStartX(e.targetTouches[0].clientX);
   };
   
   const handleCarouselTouchMove = (e: React.TouchEvent) => {
+    e.stopPropagation();
     setTouchEndX(e.targetTouches[0].clientX);
   };
   
-  const handleCarouselTouchEnd = () => {
+  const handleCarouselTouchEnd = (e: React.TouchEvent) => {
+    e.stopPropagation();
+    
     if (!touchStartX || !touchEndX) return;
     
     const distance = touchStartX - touchEndX;
@@ -290,7 +294,7 @@ const Index = () => {
             
             <div 
               ref={carouselRef}
-              className="overflow-hidden px-4 py-2"
+              className="overflow-hidden px-4 py-2 touch-pan-y"
               onTouchStart={handleCarouselTouchStart}
               onTouchMove={handleCarouselTouchMove}
               onTouchEnd={handleCarouselTouchEnd}
@@ -313,7 +317,9 @@ const Index = () => {
                       description={game.description}
                       downloads={game.downloads}
                       rating={game.rating}
-                      link={game.link} 
+                      link={game.link}
+                      onSwipeLeft={nextCard}
+                      onSwipeRight={prevCard}
                     />
                   </div>
                 ))}
