@@ -149,8 +149,8 @@ const MistplayGameCard = ({
         transform: 'translateZ(0)',
       }}
     >
-      <div className="relative">
-        <div className="h-64 overflow-hidden">
+      <div className="relative h-3/4">
+        <div className="h-full overflow-hidden">
           <img 
             src={image} 
             alt={title} 
@@ -202,33 +202,17 @@ const MistplayGameCard = ({
         </div>
       </div>
       
-      <div className="p-4">
-        <div className="flex justify-between items-center mb-2">
+      <div className="p-4 h-1/4 flex flex-col justify-between">
+        <h3 className="font-display font-bold text-lg text-white truncate">{title}</h3>
+        
+        <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Star size={18} className="text-yellow-400 fill-yellow-400" />
-            <span className="text-white ml-1 font-bold">{rating}</span>
+            <Star size={16} className="text-yellow-400 fill-yellow-400" />
+            <span className="text-white ml-1 font-bold text-sm">{rating}</span>
           </div>
-          <div className="flex items-center">
-            <Download size={12} className="text-white/70 mr-1" />
-            <span className="text-white/70 text-xs">{downloads}</span>
-          </div>
+          
+          <span className="text-sm text-white/70">{genre}</span>
         </div>
-        
-        <h3 className="font-display font-bold text-xl text-white mb-1">{title}</h3>
-        
-        <div className="flex items-center text-sm text-white/70 mb-2">
-          <span className="mr-2">{genre}</span>
-          <span className="w-1 h-1 bg-white/50 rounded-full"></span>
-          <span className="ml-2">{downloads}</span>
-        </div>
-        
-        <p className="text-sm text-white/70 mb-4 line-clamp-2">
-          {description || "Join the adventure with the cutest pig thief in this addictive simulation game. Collect coins..."}
-        </p>
-        
-        <button className="w-full bg-[#FF69B4] hover:bg-gaming-purple text-white font-display font-bold py-3 rounded-full flex items-center justify-center transition-all duration-300 touch-target touch-active will-change-transform">
-          Download Now
-        </button>
       </div>
     </a>
   );
