@@ -158,7 +158,7 @@ const MistplayGameCard = ({
             loading="lazy"
             style={{
               transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-              webkitBackfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
               backfaceVisibility: 'hidden'
             }}
           />
