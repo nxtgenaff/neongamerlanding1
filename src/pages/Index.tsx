@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { Trophy, Gamepad, Diamond, ArrowRight, Star, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Trophy, Gamepad, Diamond, ArrowRight, Star, Shield } from 'lucide-react';
 import CountdownTimer from '../components/CountdownTimer';
 import RewardCard from '../components/RewardCard';
 import TestimonialCard from '../components/TestimonialCard';
 import GamingForm from '../components/GamingForm';
 import MistplayGameCard from '../components/MistplayGameCard';
-
 const Index = () => {
   const [showBanner, setShowBanner] = useState(false);
   const [recentWinner, setRecentWinner] = useState({
@@ -13,10 +12,6 @@ const Index = () => {
     prize: ''
   });
   const [showWinner, setShowWinner] = useState(false);
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const visibleCards = 4;
-
   useEffect(() => {
     const bannerTimer = setTimeout(() => {
       setShowBanner(true);
@@ -50,7 +45,6 @@ const Index = () => {
       clearInterval(winnerInterval);
     };
   }, []);
-
   const rewards = [{
     title: "Gift Cards",
     description: "Convert your Mistplay Units to gift cards from Amazon, Google Play, and more.",
@@ -67,7 +61,6 @@ const Index = () => {
     image: "/lovable-uploads/ea4be6c1-93b5-4369-b924-69575ff3ee09.png",
     glowColor: "pink" as const
   }];
-
   const testimonials = [{
     name: "Michael R.",
     game: "Coin Master Player",
@@ -87,26 +80,19 @@ const Index = () => {
     quote: "I play games anyway, so getting rewarded for it is an awesome bonus!",
     stars: 4
   }];
-
   const mistplayGames = [{
     title: "Coin Master",
     genre: "Casual",
     points: 4500,
     image: "/lovable-uploads/7db38f96-9357-40e1-8f04-2432bfa1ddc6.png",
-    popularity: "Editor's Choice" as const,
-    description: "Join the adventure with the cutest pig thief in this addictive simulation game. Collect coins...",
-    downloads: "100M+",
-    rating: 4.5,
+    popularity: "Hot" as const,
     link: "https://areyourealhuman.com/cl/i/6d4ow7"
   }, {
     title: "Rise of Kingdoms",
     genre: "Strategy",
     points: 5200,
     image: "/lovable-uploads/e4dffdcd-eb70-400b-bcd4-90d266036b06.png",
-    popularity: "Top Rated" as const,
-    description: "Build your civilization and conquer the world in this epic strategy game with millions of players.",
-    downloads: "50M+",
-    rating: 4.8,
+    popularity: "Trending" as const,
     link: "https://areyourealhuman.com/cl/i/6d4ow7"
   }, {
     title: "Bingo Blitz",
@@ -114,9 +100,6 @@ const Index = () => {
     points: 3800,
     image: "/lovable-uploads/8e0765fb-cde1-40da-b755-5ed145f143cf.png",
     popularity: "Popular" as const,
-    description: "Play the #1 free bingo game on mobile with exciting mini-games and social features.",
-    downloads: "10M+",
-    rating: 4.6,
     link: "https://areyourealhuman.com/cl/i/6d4ow7"
   }, {
     title: "Evony",
@@ -124,59 +107,8 @@ const Index = () => {
     points: 6000,
     image: "/lovable-uploads/b07ac3a2-04de-4724-888d-561f3f91143a.png",
     popularity: "Hot" as const,
-    description: "Build your city, train your army, and conquer the Seven Kingdoms in this multiplayer strategy game.",
-    downloads: "5M+",
-    rating: 4.7,
-    link: "https://areyourealhuman.com/cl/i/6d4ow7"
-  }, {
-    title: "Piggy GO",
-    genre: "Casual",
-    points: 4200,
-    image: "/lovable-uploads/14fd3156-196d-459b-b5bf-48ffe3e93869.png",
-    popularity: "Top Rated" as const,
-    description: "Roll the dice, build and upgrade islands, collect piggies and attack your friends' boards!",
-    downloads: "50M+",
-    rating: 4.8,
     link: "https://areyourealhuman.com/cl/i/6d4ow7"
   }];
-
-  const nextCard = () => {
-    if (currentCardIndex < mistplayGames.length - visibleCards) {
-      setCurrentCardIndex(prev => prev + 1);
-    }
-  };
-
-  const prevCard = () => {
-    if (currentCardIndex > 0) {
-      setCurrentCardIndex(prev => prev - 1);
-    }
-  };
-
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
-
-  const handleCarouselTouchStart = (e: React.TouchEvent) => {
-    setTouchEndX(null);
-    setTouchStartX(e.targetTouches[0].clientX);
-  };
-  
-  const handleCarouselTouchMove = (e: React.TouchEvent) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-  };
-  
-  const handleCarouselTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
-    
-    const distance = touchStartX - touchEndX;
-    const minSwipeDistance = 50;
-    
-    if (distance > minSwipeDistance) {
-      nextCard();
-    } else if (distance < -minSwipeDistance) {
-      prevCard();
-    }
-  };
-
   return <div className="min-h-screen bg-gaming-dark overflow-hidden">
       <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 py-16 md:py-20 bg-hero-pattern">
         <div className="absolute inset-0 bg-gaming-dark/30 backdrop-blur-[2px]"></div>
@@ -271,68 +203,8 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="relative">
-            <button 
-              onClick={prevCard}
-              className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gaming-purple/80 rounded-full p-2 md:p-3 text-white ${currentCardIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
-              disabled={currentCardIndex === 0}
-            >
-              <ChevronLeft size={24} />
-            </button>
-            
-            <button 
-              onClick={nextCard}
-              className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gaming-purple/80 rounded-full p-2 md:p-3 text-white ${currentCardIndex >= mistplayGames.length - visibleCards ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
-              disabled={currentCardIndex >= mistplayGames.length - visibleCards}
-            >
-              <ChevronRight size={24} />
-            </button>
-            
-            <div 
-              ref={carouselRef}
-              className="overflow-hidden px-4 py-2"
-              onTouchStart={handleCarouselTouchStart}
-              onTouchMove={handleCarouselTouchMove}
-              onTouchEnd={handleCarouselTouchEnd}
-            >
-              <div 
-                className="flex gap-6 transition-transform duration-300 ease-out"
-                style={{ 
-                  transform: `translateX(-${currentCardIndex * (100 / visibleCards)}%)`,
-                  width: `${(mistplayGames.length / visibleCards) * 100}%`
-                }}
-              >
-                {mistplayGames.map((game, index) => (
-                  <div key={index} className="flex-1 min-w-[260px] sm:min-w-[280px] md:min-w-[300px] flex justify-center">
-                    <MistplayGameCard 
-                      title={game.title} 
-                      genre={game.genre} 
-                      points={game.points} 
-                      image={game.image} 
-                      popularity={game.popularity} 
-                      description={game.description}
-                      downloads={game.downloads}
-                      rating={game.rating}
-                      link={game.link} 
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="flex justify-center mt-8 gap-2">
-              {Array.from({ length: Math.ceil(mistplayGames.length - visibleCards + 1) }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentCardIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    currentCardIndex === index
-                      ? 'bg-gaming-pink'
-                      : 'bg-white/20 hover:bg-white/40'
-                  }`}
-                />
-              ))}
-            </div>
+          <div className="grid md:grid-cols-4 gap-6">
+            {mistplayGames.map((game, index) => <MistplayGameCard key={index} title={game.title} genre={game.genre} points={game.points} image={game.image} popularity={game.popularity} link={game.link} />)}
           </div>
           
           <div className="mt-16 text-center">
