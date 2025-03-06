@@ -15,7 +15,12 @@ const Index = () => {
   const [showWinner, setShowWinner] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselWrapperRef = useRef<HTMLDivElement>(null);
   const visibleCards = 4;
+  const isTouchDragging = useRef(false);
+  const startDragX = useRef(0);
+  const currentTranslateX = useRef(0);
+  const previousTranslateX = useRef(0);
 
   useEffect(() => {
     const bannerTimer = setTimeout(() => {
@@ -152,33 +157,88 @@ const Index = () => {
     }
   };
 
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
-
   const handleCarouselTouchStart = (e: React.TouchEvent) => {
+    if (!carouselWrapperRef.current) return;
+    
+    isTouchDragging.current = true;
+    startDragX.current = e.touches[0].clientX;
+    previousTranslateX.current = currentCardIndex * -(100 / visibleCards);
+    currentTranslateX.current = previousTranslateX.current;
+    
+    // Stop any ongoing animation
+    if (carouselWrapperRef.current) {
+      carouselWrapperRef.current.style.transition = 'none';
+    }
+    
     e.stopPropagation();
-    setTouchEndX(null);
-    setTouchStartX(e.targetTouches[0].clientX);
   };
   
   const handleCarouselTouchMove = (e: React.TouchEvent) => {
+    if (!isTouchDragging.current || !carouselWrapperRef.current) return;
+    
+    const currentX = e.touches[0].clientX;
+    const diff = currentX - startDragX.current;
+    const maxMove = 100 / visibleCards; // Maximum percentage to move per card
+    
+    // Calculate new position with resistance at the edges
+    let newTranslateX;
+    if (currentCardIndex <= 0 && diff > 0) {
+      // Add resistance when trying to swipe right at the beginning
+      newTranslateX = previousTranslateX.current + (diff / 3) / carouselRef.current!.clientWidth * 100;
+    } else if (currentCardIndex >= mistplayGames.length - visibleCards && diff < 0) {
+      // Add resistance when trying to swipe left at the end
+      newTranslateX = previousTranslateX.current + (diff / 3) / carouselRef.current!.clientWidth * 100;
+    } else {
+      // Normal movement
+      newTranslateX = previousTranslateX.current + diff / carouselRef.current!.clientWidth * 100;
+    }
+    
+    currentTranslateX.current = newTranslateX;
+    
+    // Apply the translation
+    carouselWrapperRef.current.style.transform = `translateX(${newTranslateX}%)`;
+    
     e.stopPropagation();
-    setTouchEndX(e.targetTouches[0].clientX);
+    e.preventDefault();
   };
   
   const handleCarouselTouchEnd = (e: React.TouchEvent) => {
-    e.stopPropagation();
+    if (!isTouchDragging.current || !carouselWrapperRef.current) return;
     
-    if (!touchStartX || !touchEndX) return;
-    
-    const distance = touchStartX - touchEndX;
-    const minSwipeDistance = 50;
-    
-    if (distance > minSwipeDistance) {
-      nextCard();
-    } else if (distance < -minSwipeDistance) {
-      prevCard();
+    // Re-enable transitions
+    if (carouselWrapperRef.current) {
+      carouselWrapperRef.current.style.transition = 'transform 300ms ease-out';
     }
+    
+    // Calculate the new index based on the drag distance
+    const dragDistance = startDragX.current - e.changedTouches[0].clientX;
+    const cardThreshold = 30; // Adjust this threshold for sensitivity
+    
+    let newIndex = currentCardIndex;
+    
+    if (Math.abs(dragDistance) > cardThreshold) {
+      if (dragDistance > 0 && currentCardIndex < mistplayGames.length - visibleCards) {
+        // Dragged left - go to next card
+        newIndex = currentCardIndex + 1;
+      } else if (dragDistance < 0 && currentCardIndex > 0) {
+        // Dragged right - go to previous card
+        newIndex = currentCardIndex - 1;
+      }
+    }
+    
+    // Update the current index
+    setCurrentCardIndex(newIndex);
+    
+    // Snap back to grid
+    const newTranslateX = newIndex * -(100 / visibleCards);
+    if (carouselWrapperRef.current) {
+      carouselWrapperRef.current.style.transform = `translateX(${newTranslateX}%)`;
+    }
+    
+    // Reset the drag state
+    isTouchDragging.current = false;
+    
+    e.stopPropagation();
   };
 
   return <div className="min-h-screen bg-gaming-dark overflow-hidden">
@@ -298,9 +358,11 @@ const Index = () => {
               onTouchStart={handleCarouselTouchStart}
               onTouchMove={handleCarouselTouchMove}
               onTouchEnd={handleCarouselTouchEnd}
+              style={{ touchAction: 'pan-y' }}
             >
               <div 
-                className="flex gap-6 transition-transform duration-300 ease-out"
+                ref={carouselWrapperRef}
+                className="flex gap-6 transition-transform duration-300 ease-out will-change-transform"
                 style={{ 
                   transform: `translateX(-${currentCardIndex * (100 / visibleCards)}%)`,
                   width: `${(mistplayGames.length / visibleCards) * 100}%`

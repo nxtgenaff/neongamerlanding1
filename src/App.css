@@ -124,8 +124,40 @@
   touch-action: pan-y;
 }
 
-/* Disable pull-to-refresh on mobile */
+/* Disable pull-to-refresh on mobile and improve swipe handling */
 html, body {
   overscroll-behavior-y: contain;
 }
 
+/* Enhanced touch handling for card swiping */
+.card-touch-draggable {
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Improve hardware acceleration for smooth animations */
+.will-change-transform {
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Add active state for buttons on touch devices */
+@media (hover: none) {
+  .touch-active:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+/* Make scrolling feel native on iOS */
+.momentum-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent text selection during drag */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}

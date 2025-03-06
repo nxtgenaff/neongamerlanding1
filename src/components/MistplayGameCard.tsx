@@ -36,8 +36,8 @@ const MistplayGameCard = ({
   const [isSwiping, setIsSwiping] = useState(false);
   const cardRef = useRef<HTMLAnchorElement>(null);
   
-  // Minimum swipe distance to register as swipe
-  const minSwipeDistance = 50;
+  // Minimum swipe distance to register as swipe (reduced for better responsiveness)
+  const minSwipeDistance = 30;
   
   const popularityColors: Record<string, string> = {
     'Hot': 'bg-gaming-pink text-white',
@@ -49,7 +49,7 @@ const MistplayGameCard = ({
     'Free': 'bg-black/80 text-white'
   };
 
-  // Handle touch events for mobile swipe
+  // Improved touch handling for mobile swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     setIsHovered(true);
     setTouchEnd(null);
@@ -61,15 +61,20 @@ const MistplayGameCard = ({
     setTouchEnd(e.targetTouches[0].clientX);
     
     // If the touch has moved more than a small threshold, consider it a swipe
-    if (touchStart && Math.abs(touchStart - e.targetTouches[0].clientX) > 10) {
+    if (touchStart && Math.abs(touchStart - e.targetTouches[0].clientX) > 5) {
       setIsSwiping(true);
+    }
+    
+    // Prevent default behavior to stop page scrolling during card swipe
+    if (isSwiping) {
+      e.preventDefault();
     }
   };
   
   const handleTouchEnd = () => {
-    // Slight delay to allow for tapping the button, but only if not swiping
     if (!isSwiping) {
-      setTimeout(() => setIsHovered(false), 500);
+      // Only delay hover state removal if not swiping (for tap interactions)
+      setTimeout(() => setIsHovered(false), 300);
     } else {
       setIsHovered(false);
     }
@@ -91,8 +96,15 @@ const MistplayGameCard = ({
     // Reset swiping state
     setIsSwiping(false);
   };
+  
+  // Stop propagation of touch events to parent elements to prevent conflicting gestures
+  const stopPropagation = (e: React.TouchEvent) => {
+    if (isSwiping) {
+      e.stopPropagation();
+    }
+  };
 
-  // Prevent default behavior for touch events to avoid page scrolling during swipe
+  // Apply better touch handling to prevent scrolling conflicts
   useEffect(() => {
     const card = cardRef.current;
     
@@ -118,7 +130,7 @@ const MistplayGameCard = ({
       ref={cardRef}
       href={isSwiping ? undefined : (link || "#")}
       className={cn(
-        "glass-panel transition-all duration-300 border border-white/5 rounded-2xl overflow-hidden block max-w-[320px] shadow-lg",
+        "glass-panel transition-all duration-300 border border-white/5 rounded-2xl overflow-hidden block max-w-[320px] shadow-lg will-change-transform",
         isHovered && "neon-border shadow-neon-glow"
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -126,10 +138,14 @@ const MistplayGameCard = ({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onTouchCancel={() => setIsHovered(false)}
       onClick={(e) => {
         if (isSwiping) {
           e.preventDefault();
         }
+      }}
+      style={{
+        touchAction: isSwiping ? 'none' : 'manipulation', 
       }}
     >
       <div className="relative">
