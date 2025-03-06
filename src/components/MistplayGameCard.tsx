@@ -1,5 +1,5 @@
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Star, Download, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -13,8 +13,6 @@ interface MistplayGameCardProps {
   downloads?: string;
   rating?: number;
   link?: string;
-  onSwipeLeft?: () => void;
-  onSwipeRight?: () => void;
 }
 
 const MistplayGameCard = ({ 
@@ -26,17 +24,15 @@ const MistplayGameCard = ({
   description,
   downloads = "100M+",
   rating = 4.5,
-  link,
-  onSwipeLeft,
-  onSwipeRight
+  link 
 }: MistplayGameCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [isSwiping, setIsSwiping] = useState(false);
   const cardRef = useRef<HTMLAnchorElement>(null);
   
-  const minSwipeDistance = 15;
+  // Minimum swipe distance to register as swipe
+  const minSwipeDistance = 50;
   
   const popularityColors: Record<string, string> = {
     'Hot': 'bg-gaming-pink text-white',
@@ -48,40 +44,20 @@ const MistplayGameCard = ({
     'Free': 'bg-black/80 text-white'
   };
 
+  // Handle touch events for mobile swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     setIsHovered(true);
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
-    setIsSwiping(false);
-    
-    if (cardRef.current) {
-      cardRef.current.classList.add('touch-active');
-    }
-    
-    if (e.target instanceof HTMLButtonElement) {
-      e.preventDefault();
-    }
   };
   
   const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEnd(e.targetTouches[0].clientX);
-    
-    if (touchStart && Math.abs(touchStart - e.targetTouches[0].clientX) > 3) {
-      setIsSwiping(true);
-      e.preventDefault();
-    }
   };
   
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (cardRef.current) {
-      cardRef.current.classList.remove('touch-active');
-    }
-    
-    if (!isSwiping) {
-      setTimeout(() => setIsHovered(false), 100);
-    } else {
-      setIsHovered(false);
-    }
+  const handleTouchEnd = () => {
+    // Slight delay to allow for tapping the button
+    setTimeout(() => setIsHovered(false), 500);
     
     if (!touchStart || !touchEnd) return;
     
@@ -89,53 +65,23 @@ const MistplayGameCard = ({
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
     
-    if (isLeftSwipe && onSwipeLeft) {
-      onSwipeLeft();
-      e.preventDefault();
-      e.stopPropagation();
+    if (isLeftSwipe) {
+      // Handle left swipe - could trigger next card
+      console.log('Swiped left');
     }
     
-    if (isRightSwipe && onSwipeRight) {
-      onSwipeRight();
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    
-    setIsSwiping(false);
-  };
-  
-  const handleClick = (e: React.MouseEvent) => {
-    if (isSwiping) {
-      e.preventDefault();
+    if (isRightSwipe) {
+      // Handle right swipe - could trigger previous card
+      console.log('Swiped right');
     }
   };
-
-  useEffect(() => {
-    const card = cardRef.current;
-    
-    const preventScrollOnSwipe = (e: TouchEvent) => {
-      if (isSwiping) {
-        e.preventDefault();
-      }
-    };
-    
-    if (card) {
-      card.addEventListener('touchmove', preventScrollOnSwipe, { passive: false });
-    }
-    
-    return () => {
-      if (card) {
-        card.removeEventListener('touchmove', preventScrollOnSwipe);
-      }
-    };
-  }, [isSwiping]);
 
   return (
     <a 
       ref={cardRef}
-      href={isSwiping ? undefined : (link || "#")}
+      href={link || "#"}
       className={cn(
-        "glass-panel transition-all duration-300 border border-white/5 rounded-xl overflow-hidden block h-[280px] will-change-transform momentum-scroll no-select",
+        "glass-panel transition-all duration-300 border border-white/5 rounded-2xl overflow-hidden block max-w-[320px] shadow-lg",
         isHovered && "neon-border shadow-neon-glow"
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -143,77 +89,94 @@ const MistplayGameCard = ({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      onTouchCancel={handleTouchEnd}
-      onClick={handleClick}
-      style={{
-        touchAction: isSwiping ? 'none' : 'manipulation',
-        transform: 'translateZ(0)',
-      }}
     >
-      <div className="relative h-3/5">
-        <div className="h-full overflow-hidden">
+      <div className="relative">
+        {/* Main image area */}
+        <div className="h-64 overflow-hidden">
           <img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-300 ease-in-out will-change-transform"
+            className="w-full h-full object-cover transition-transform duration-300 ease-in-out"
             loading="lazy"
             style={{
-              transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-              WebkitBackfaceVisibility: 'hidden',
-              backfaceVisibility: 'hidden'
+              transform: isHovered ? 'scale(1.05)' : 'scale(1)'
             }}
           />
           
+          {/* Play Now button that appears on hover/touch */}
           <div 
-            className={`absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-200 ${
-              isHovered ? 'opacity-100 visible' : 'opacity-0 invisible'
+            className={`absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-300 ${
+              isHovered ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <button className="bg-gaming-blue hover:bg-gaming-purple text-white font-display font-bold py-2 px-4 rounded-full flex items-center transition-all duration-300 transform hover:scale-105 touch-target touch-active text-sm">
-              <Download size={16} className="mr-1" />
+            <button className="bg-gaming-blue hover:bg-gaming-purple text-white font-display font-bold py-3 px-6 rounded-full flex items-center transition-all duration-300 transform hover:scale-105 touch-target">
+              <Download size={20} className="mr-2" />
               Play Now
             </button>
           </div>
         </div>
         
-        <div className="absolute top-2 left-2 flex flex-wrap gap-1">
+        {/* Multiple badges positioned at the top */}
+        <div className="absolute top-2 left-2 flex flex-wrap gap-2">
+          {/* Can display multiple badges */}
           {(popularity === 'Editor\'s Choice' || popularity === 'Top Rated') && (
-            <div className={`px-2 py-0.5 rounded-full text-xs font-bold ${popularityColors['Editor\'s Choice']}`}>
+            <div className={`px-3 py-1 rounded-full text-xs font-bold ${popularityColors['Editor\'s Choice']}`}>
               Editor's Choice
             </div>
           )}
           {(popularity === 'Top Rated' || popularity === 'Hot') && (
-            <div className={`px-2 py-0.5 rounded-full text-xs font-bold ${popularityColors['Top Rated']}`}>
+            <div className={`px-3 py-1 rounded-full text-xs font-bold ${popularityColors['Top Rated']}`}>
               Top Rated
             </div>
           )}
         </div>
         
+        {/* Free badge */}
         <div className="absolute top-2 right-2">
-          <div className={`px-2 py-0.5 rounded-full text-xs font-bold ${popularityColors['Free']}`}>
+          <div className={`px-3 py-1 rounded-full text-xs font-bold ${popularityColors['Free']}`}>
             Free
           </div>
         </div>
         
-        <div className={`absolute left-1 top-1/2 transform -translate-y-1/2 bg-black/60 rounded-full p-1 text-white cursor-pointer transition-opacity ${isHovered ? 'opacity-70 hover:opacity-100' : 'opacity-0'}`}>
-          <ChevronLeft size={20} />
+        {/* Swipe indicators */}
+        <div className={`absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/40 rounded-full p-2 text-white cursor-pointer opacity-0 transition-opacity ${isHovered ? 'opacity-70 hover:opacity-100' : ''}`}>
+          <ChevronLeft size={24} />
         </div>
-        <div className={`absolute right-1 top-1/2 transform -translate-y-1/2 bg-black/60 rounded-full p-1 text-white cursor-pointer transition-opacity ${isHovered ? 'opacity-70 hover:opacity-100' : 'opacity-0'}`}>
-          <ChevronRight size={20} />
+        <div className={`absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/40 rounded-full p-2 text-white cursor-pointer opacity-0 transition-opacity ${isHovered ? 'opacity-70 hover:opacity-100' : ''}`}>
+          <ChevronRight size={24} />
         </div>
       </div>
       
-      <div className="p-3 h-2/5 flex flex-col justify-between">
-        <h3 className="font-display font-bold text-base text-white truncate">{title}</h3>
-        
-        <div className="flex justify-between items-center">
+      {/* Content area at the bottom */}
+      <div className="p-4">
+        {/* Star rating and number */}
+        <div className="flex justify-between items-center mb-2">
           <div className="flex items-center">
-            <Star size={14} className="text-yellow-400 fill-yellow-400" />
-            <span className="text-white ml-1 font-bold text-xs">{rating}</span>
+            <Star size={18} className="text-yellow-400 fill-yellow-400" />
+            <span className="text-white ml-1 font-bold">{rating}</span>
           </div>
-          
-          <span className="text-xs text-white/70">{genre}</span>
+          <div className="flex items-center">
+            <Star size={18} className="text-yellow-400 fill-yellow-400" />
+            <span className="text-white ml-1 font-bold">4.8</span>
+          </div>
         </div>
+        
+        <h3 className="font-display font-bold text-xl text-white mb-1">{title}</h3>
+        
+        <div className="flex items-center text-sm text-white/70 mb-2">
+          <span className="mr-2">{genre}</span>
+          <span className="w-1 h-1 bg-white/50 rounded-full"></span>
+          <span className="ml-2">{downloads}</span>
+        </div>
+        
+        <p className="text-sm text-white/70 mb-4 line-clamp-2">
+          {description || "Join the adventure with the cutest pig thief in this addictive simulation game. Collect coins..."}
+        </p>
+        
+        {/* Download button */}
+        <button className="w-full bg-[#FF69B4] hover:bg-gaming-purple text-white font-display font-bold py-3 rounded-full flex items-center justify-center transition-all duration-300">
+          Download Now
+        </button>
       </div>
     </a>
   );

@@ -1,4 +1,5 @@
 
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -112,103 +113,4 @@
   .animate-shimmer {
     animation-duration: 3s;
   }
-}
-
-/* Touch improvements */
-.touch-target {
-  touch-action: manipulation;
-  min-height: 44px;
-  min-width: 44px;
-}
-
-.touch-pan-y {
-  touch-action: pan-y;
-}
-
-/* Disable pull-to-refresh on mobile and improve swipe handling */
-html, body {
-  overscroll-behavior-y: contain;
-}
-
-/* Enhanced touch handling for card swiping */
-.card-touch-draggable {
-  touch-action: pan-y;
-  -webkit-user-select: none;
-  user-select: none;
-  /* Added to enable 3D transforms which enable GPU acceleration */
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* Improve hardware acceleration for smooth animations */
-.will-change-transform {
-  will-change: transform;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-/* Add active state for buttons on touch devices */
-@media (hover: none) {
-  .touch-active:active {
-    transform: scale(0.97);
-    opacity: 0.9;
-    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
-  }
-}
-
-/* Make scrolling feel native on iOS */
-.momentum-scroll {
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-
-/* Prevent text selection during drag */
-.no-select {
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-/* Improved carousel navigation on mobile */
-@media (max-width: 768px) {
-  .carousel-control {
-    width: 40px;
-    height: 40px;
-    opacity: 0.8;
-  }
-  
-  /* Make dots easier to tap */
-  .carousel-dots button {
-    min-width: 30px;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Make carousel items take full width on mobile */
-  .carousel-item-mobile-full {
-    width: 100%;
-    min-width: 100%;
-  }
-  
-  /* Ensure snappy sliding */
-  .carousel-wrapper {
-    scroll-snap-type: x mandatory;
-  }
-  
-  .carousel-item {
-    scroll-snap-align: center;
-  }
-}
-
-/* Fix for iOS 100vh issue */
-.ios-height-fix {
-  height: 100%;
-  height: -webkit-fill-available;
-}
-
-/* Improve carousel touch dragging */
-.carousel-smooth-drag {
-  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 }

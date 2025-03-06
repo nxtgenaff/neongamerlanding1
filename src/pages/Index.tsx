@@ -15,135 +15,41 @@ const Index = () => {
   const [showWinner, setShowWinner] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const carouselWrapperRef = useRef<HTMLDivElement>(null);
-  const visibleCards = window.innerWidth < 768 ? 1 : 4;
-  const isTouchDragging = useRef(false);
-  const startDragX = useRef(0);
-  const currentTranslateX = useRef(0);
-  const previousTranslateX = useRef(0);
-  const lastDragTime = useRef(0);
-  const dragVelocity = useRef(0);
+  const visibleCards = 4;
 
   useEffect(() => {
-    const handleResize = () => {
-      setCurrentCardIndex(0);
-    };
-
-    window.addEventListener('resize', handleResize);
+    const bannerTimer = setTimeout(() => {
+      setShowBanner(true);
+    }, 3000);
+    const winners = [{
+      name: 'Alex89',
+      prize: '5000 Units'
+    }, {
+      name: 'GamerQueen',
+      prize: '$15 Amazon Gift Card'
+    }, {
+      name: 'FrostySniper',
+      prize: '$25 PayPal Credit'
+    }, {
+      name: 'EliteGamer22',
+      prize: '10000 Units'
+    }];
+    const winnerInterval = setInterval(() => {
+      if (Date.now() - pageLoadTime > 5000) {
+        const randomWinner = winners[Math.floor(Math.random() * winners.length)];
+        setRecentWinner(randomWinner);
+        setShowWinner(true);
+        setTimeout(() => {
+          setShowWinner(false);
+        }, 4000);
+      }
+    }, 15000);
+    const pageLoadTime = Date.now();
     return () => {
-      window.removeEventListener('resize', handleResize);
+      clearTimeout(bannerTimer);
+      clearInterval(winnerInterval);
     };
   }, []);
-
-  const nextCard = () => {
-    if (currentCardIndex < mistplayGames.length - visibleCards) {
-      setCurrentCardIndex(prev => prev + 1);
-    } else {
-      if (carouselWrapperRef.current) {
-        carouselWrapperRef.current.style.transition = 'none';
-        setCurrentCardIndex(0);
-        void carouselWrapperRef.current.offsetWidth;
-        carouselWrapperRef.current.style.transition = 'transform 300ms ease-out';
-      }
-    }
-  };
-
-  const prevCard = () => {
-    if (currentCardIndex > 0) {
-      setCurrentCardIndex(prev => prev - 1);
-    } else {
-      if (carouselWrapperRef.current) {
-        carouselWrapperRef.current.style.transition = 'none';
-        setCurrentCardIndex(mistplayGames.length - visibleCards);
-        void carouselWrapperRef.current.offsetWidth;
-        carouselWrapperRef.current.style.transition = 'transform 300ms ease-out';
-      }
-    }
-  };
-
-  const handleCarouselTouchStart = (e: React.TouchEvent) => {
-    if (!carouselWrapperRef.current) return;
-    
-    isTouchDragging.current = true;
-    startDragX.current = e.touches[0].clientX;
-    previousTranslateX.current = currentCardIndex * -(100 / visibleCards);
-    currentTranslateX.current = previousTranslateX.current;
-    lastDragTime.current = Date.now();
-    dragVelocity.current = 0;
-    
-    if (carouselWrapperRef.current) {
-      carouselWrapperRef.current.style.transition = 'none';
-    }
-    
-    e.stopPropagation();
-  };
-  
-  const handleCarouselTouchMove = (e: React.TouchEvent) => {
-    if (!isTouchDragging.current || !carouselWrapperRef.current) return;
-    
-    const currentX = e.touches[0].clientX;
-    const diff = currentX - startDragX.current;
-    const now = Date.now();
-    const elapsed = now - lastDragTime.current;
-    
-    if (elapsed > 0) {
-      dragVelocity.current = (currentX - startDragX.current) / elapsed;
-      lastDragTime.current = now;
-    }
-    
-    let newTranslateX;
-    if (currentCardIndex <= 0 && diff > 0) {
-      newTranslateX = previousTranslateX.current + (diff / 1.5) / carouselRef.current!.clientWidth * 100;
-    } else if (currentCardIndex >= mistplayGames.length - visibleCards && diff < 0) {
-      newTranslateX = previousTranslateX.current + (diff / 1.5) / carouselRef.current!.clientWidth * 100;
-    } else {
-      newTranslateX = previousTranslateX.current + diff / carouselRef.current!.clientWidth * 100;
-    }
-    
-    currentTranslateX.current = newTranslateX;
-    
-    carouselWrapperRef.current.style.transform = `translateX(${newTranslateX}%)`;
-    
-    e.preventDefault();
-    e.stopPropagation();
-  };
-  
-  const handleCarouselTouchEnd = (e: React.TouchEvent) => {
-    if (!isTouchDragging.current || !carouselWrapperRef.current) return;
-    
-    if (carouselWrapperRef.current) {
-      carouselWrapperRef.current.style.transition = 'transform 300ms ease-out';
-    }
-    
-    const dragDistance = startDragX.current - e.changedTouches[0].clientX;
-    const cardThreshold = 20;
-    
-    let newIndex = currentCardIndex;
-    
-    if (Math.abs(dragDistance) > cardThreshold || Math.abs(dragVelocity.current) > 0.2) {
-      if ((dragDistance > 0 || dragVelocity.current < -0.2) && currentCardIndex < mistplayGames.length - visibleCards) {
-        newIndex = currentCardIndex + 1;
-      } else if ((dragDistance < 0 || dragVelocity.current > 0.2) && currentCardIndex > 0) {
-        newIndex = currentCardIndex - 1;
-      } else if (dragDistance > 0 && currentCardIndex >= mistplayGames.length - visibleCards) {
-        newIndex = 0;
-      } else if (dragDistance < 0 && currentCardIndex <= 0) {
-        newIndex = mistplayGames.length - visibleCards;
-      }
-    }
-    
-    setCurrentCardIndex(newIndex);
-    
-    const newTranslateX = newIndex * -(100 / visibleCards);
-    if (carouselWrapperRef.current) {
-      carouselWrapperRef.current.style.transform = `translateX(${newTranslateX}%)`;
-    }
-    
-    isTouchDragging.current = false;
-    dragVelocity.current = 0;
-    
-    e.stopPropagation();
-  };
 
   const rewards = [{
     title: "Gift Cards",
@@ -234,6 +140,43 @@ const Index = () => {
     link: "https://areyourealhuman.com/cl/i/6d4ow7"
   }];
 
+  const nextCard = () => {
+    if (currentCardIndex < mistplayGames.length - visibleCards) {
+      setCurrentCardIndex(prev => prev + 1);
+    }
+  };
+
+  const prevCard = () => {
+    if (currentCardIndex > 0) {
+      setCurrentCardIndex(prev => prev - 1);
+    }
+  };
+
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
+
+  const handleCarouselTouchStart = (e: React.TouchEvent) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+  
+  const handleCarouselTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+  
+  const handleCarouselTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    
+    const distance = touchStartX - touchEndX;
+    const minSwipeDistance = 50;
+    
+    if (distance > minSwipeDistance) {
+      nextCard();
+    } else if (distance < -minSwipeDistance) {
+      prevCard();
+    }
+  };
+
   return <div className="min-h-screen bg-gaming-dark overflow-hidden">
       <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 py-16 md:py-20 bg-hero-pattern">
         <div className="absolute inset-0 bg-gaming-dark/30 backdrop-blur-[2px]"></div>
@@ -312,9 +255,9 @@ const Index = () => {
         </div>
       </section>
       
-      <section id="games" className="py-16 relative">
+      <section id="games" className="py-20 relative">
         <div className="container max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
               <p className="text-gaming-blue text-sm font-medium flex items-center justify-center">
                 <Gamepad size={14} className="mr-1" /> Featured Mistplay Games
@@ -331,38 +274,36 @@ const Index = () => {
           <div className="relative">
             <button 
               onClick={prevCard}
-              className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gaming-purple/80 rounded-full p-2 md:p-3 text-white touch-target ${currentCardIndex === 0 ? 'opacity-50' : 'opacity-100'}`}
-              aria-label="Previous card"
+              className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gaming-purple/80 rounded-full p-2 md:p-3 text-white ${currentCardIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
+              disabled={currentCardIndex === 0}
             >
               <ChevronLeft size={24} />
             </button>
             
             <button 
               onClick={nextCard}
-              className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gaming-purple/80 rounded-full p-2 md:p-3 text-white touch-target ${currentCardIndex >= mistplayGames.length - visibleCards ? 'opacity-50' : 'opacity-100'}`}
-              aria-label="Next card"
+              className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gaming-purple/80 rounded-full p-2 md:p-3 text-white ${currentCardIndex >= mistplayGames.length - visibleCards ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
+              disabled={currentCardIndex >= mistplayGames.length - visibleCards}
             >
               <ChevronRight size={24} />
             </button>
             
             <div 
               ref={carouselRef}
-              className="overflow-hidden px-4 py-2 touch-pan-y card-touch-draggable"
+              className="overflow-hidden px-4 py-2"
               onTouchStart={handleCarouselTouchStart}
               onTouchMove={handleCarouselTouchMove}
               onTouchEnd={handleCarouselTouchEnd}
-              onTouchCancel={handleCarouselTouchEnd}
             >
               <div 
-                ref={carouselWrapperRef}
-                className="flex gap-4 transition-transform duration-300 ease-out will-change-transform"
+                className="flex gap-6 transition-transform duration-300 ease-out"
                 style={{ 
                   transform: `translateX(-${currentCardIndex * (100 / visibleCards)}%)`,
                   width: `${(mistplayGames.length / visibleCards) * 100}%`
                 }}
               >
                 {mistplayGames.map((game, index) => (
-                  <div key={index} className="flex-1 min-w-0" style={{ minWidth: `${100 / visibleCards - 5}%` }}>
+                  <div key={index} className="flex-1 min-w-[260px] sm:min-w-[280px] md:min-w-[300px] flex justify-center">
                     <MistplayGameCard 
                       title={game.title} 
                       genre={game.genre} 
@@ -372,9 +313,7 @@ const Index = () => {
                       description={game.description}
                       downloads={game.downloads}
                       rating={game.rating}
-                      link={game.link}
-                      onSwipeLeft={() => currentCardIndex < mistplayGames.length - visibleCards && nextCard()}
-                      onSwipeRight={() => currentCardIndex > 0 && prevCard()}
+                      link={game.link} 
                     />
                   </div>
                 ))}
@@ -382,16 +321,15 @@ const Index = () => {
             </div>
             
             <div className="flex justify-center mt-8 gap-2">
-              {Array.from({ length: Math.min(mistplayGames.length - visibleCards + 1, 5) }).map((_, index) => (
+              {Array.from({ length: Math.ceil(mistplayGames.length - visibleCards + 1) }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentCardIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-colors touch-target ${
+                  className={`w-3 h-3 rounded-full transition-colors ${
                     currentCardIndex === index
                       ? 'bg-gaming-pink'
                       : 'bg-white/20 hover:bg-white/40'
                   }`}
-                  aria-label={`Go to slide ${index + 1}`}
                 />
               ))}
             </div>
@@ -411,9 +349,9 @@ const Index = () => {
         <div className="absolute bottom-40 -right-40 w-80 h-80 bg-gaming-purple/5 rounded-full blur-3xl"></div>
       </section>
       
-      <section id="rewards" className="py-16 relative">
+      <section id="rewards" className="py-20 relative">
         <div className="container max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
               <p className="text-gaming-blue text-sm font-medium flex items-center justify-center">
                 <Star size={14} className="mr-1" /> Mistplay Rewards
@@ -427,7 +365,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {rewards.map((reward, index) => <RewardCard key={index} title={reward.title} description={reward.description} image={reward.image} glowColor={reward.glowColor} />)}
           </div>
           
@@ -445,9 +383,9 @@ const Index = () => {
         <div className="absolute bottom-40 -right-40 w-80 h-80 bg-gaming-purple/5 rounded-full blur-3xl"></div>
       </section>
       
-      <section className="py-16 bg-gaming-darker relative clip-path-slant">
+      <section className="py-20 bg-gaming-darker relative clip-path-slant">
         <div className="container max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
               Trusted by <span className="neon-text">Gamers</span> Worldwide
             </h2>
@@ -456,7 +394,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => <TestimonialCard key={index} name={testimonial.name} game={testimonial.game} avatar={testimonial.avatar} quote={testimonial.quote} stars={testimonial.stars} />)}
           </div>
           
