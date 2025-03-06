@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { Star, Download, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -134,7 +135,7 @@ const MistplayGameCard = ({
       ref={cardRef}
       href={isSwiping ? undefined : (link || "#")}
       className={cn(
-        "glass-panel transition-all duration-300 border border-white/5 rounded-2xl overflow-hidden block h-full will-change-transform momentum-scroll no-select",
+        "glass-panel transition-all duration-300 border border-white/5 rounded-xl overflow-hidden block h-[280px] will-change-transform momentum-scroll no-select",
         isHovered && "neon-border shadow-neon-glow"
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -149,7 +150,7 @@ const MistplayGameCard = ({
         transform: 'translateZ(0)',
       }}
     >
-      <div className="relative h-3/4">
+      <div className="relative h-3/5">
         <div className="h-full overflow-hidden">
           <img 
             src={image} 
@@ -168,50 +169,50 @@ const MistplayGameCard = ({
               isHovered ? 'opacity-100 visible' : 'opacity-0 invisible'
             }`}
           >
-            <button className="bg-gaming-blue hover:bg-gaming-purple text-white font-display font-bold py-3 px-6 rounded-full flex items-center transition-all duration-300 transform hover:scale-105 touch-target touch-active">
-              <Download size={20} className="mr-2" />
+            <button className="bg-gaming-blue hover:bg-gaming-purple text-white font-display font-bold py-2 px-4 rounded-full flex items-center transition-all duration-300 transform hover:scale-105 touch-target touch-active text-sm">
+              <Download size={16} className="mr-1" />
               Play Now
             </button>
           </div>
         </div>
         
-        <div className="absolute top-2 left-2 flex flex-wrap gap-2">
+        <div className="absolute top-2 left-2 flex flex-wrap gap-1">
           {(popularity === 'Editor\'s Choice' || popularity === 'Top Rated') && (
-            <div className={`px-3 py-1 rounded-full text-xs font-bold ${popularityColors['Editor\'s Choice']}`}>
+            <div className={`px-2 py-0.5 rounded-full text-xs font-bold ${popularityColors['Editor\'s Choice']}`}>
               Editor's Choice
             </div>
           )}
           {(popularity === 'Top Rated' || popularity === 'Hot') && (
-            <div className={`px-3 py-1 rounded-full text-xs font-bold ${popularityColors['Top Rated']}`}>
+            <div className={`px-2 py-0.5 rounded-full text-xs font-bold ${popularityColors['Top Rated']}`}>
               Top Rated
             </div>
           )}
         </div>
         
         <div className="absolute top-2 right-2">
-          <div className={`px-3 py-1 rounded-full text-xs font-bold ${popularityColors['Free']}`}>
+          <div className={`px-2 py-0.5 rounded-full text-xs font-bold ${popularityColors['Free']}`}>
             Free
           </div>
         </div>
         
-        <div className={`absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/60 rounded-full p-2 text-white cursor-pointer transition-opacity ${isHovered ? 'opacity-70 hover:opacity-100' : 'opacity-0'}`}>
-          <ChevronLeft size={24} />
+        <div className={`absolute left-1 top-1/2 transform -translate-y-1/2 bg-black/60 rounded-full p-1 text-white cursor-pointer transition-opacity ${isHovered ? 'opacity-70 hover:opacity-100' : 'opacity-0'}`}>
+          <ChevronLeft size={20} />
         </div>
-        <div className={`absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/60 rounded-full p-2 text-white cursor-pointer transition-opacity ${isHovered ? 'opacity-70 hover:opacity-100' : 'opacity-0'}`}>
-          <ChevronRight size={24} />
+        <div className={`absolute right-1 top-1/2 transform -translate-y-1/2 bg-black/60 rounded-full p-1 text-white cursor-pointer transition-opacity ${isHovered ? 'opacity-70 hover:opacity-100' : 'opacity-0'}`}>
+          <ChevronRight size={20} />
         </div>
       </div>
       
-      <div className="p-4 h-1/4 flex flex-col justify-between">
-        <h3 className="font-display font-bold text-lg text-white truncate">{title}</h3>
+      <div className="p-3 h-2/5 flex flex-col justify-between">
+        <h3 className="font-display font-bold text-base text-white truncate">{title}</h3>
         
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Star size={16} className="text-yellow-400 fill-yellow-400" />
-            <span className="text-white ml-1 font-bold text-sm">{rating}</span>
+            <Star size={14} className="text-yellow-400 fill-yellow-400" />
+            <span className="text-white ml-1 font-bold text-xs">{rating}</span>
           </div>
           
-          <span className="text-sm text-white/70">{genre}</span>
+          <span className="text-xs text-white/70">{genre}</span>
         </div>
       </div>
     </a>

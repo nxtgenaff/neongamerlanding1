@@ -312,9 +312,9 @@ const Index = () => {
         </div>
       </section>
       
-      <section id="games" className="py-20 relative">
+      <section id="games" className="py-16 relative">
         <div className="container max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
               <p className="text-gaming-blue text-sm font-medium flex items-center justify-center">
                 <Gamepad size={14} className="mr-1" /> Featured Mistplay Games
@@ -355,7 +355,7 @@ const Index = () => {
             >
               <div 
                 ref={carouselWrapperRef}
-                className="flex gap-6 transition-transform duration-300 ease-out will-change-transform"
+                className="flex gap-4 transition-transform duration-300 ease-out will-change-transform"
                 style={{ 
                   transform: `translateX(-${currentCardIndex * (100 / visibleCards)}%)`,
                   width: `${(mistplayGames.length / visibleCards) * 100}%`
@@ -411,9 +411,9 @@ const Index = () => {
         <div className="absolute bottom-40 -right-40 w-80 h-80 bg-gaming-purple/5 rounded-full blur-3xl"></div>
       </section>
       
-      <section id="rewards" className="py-20 relative">
+      <section id="rewards" className="py-16 relative">
         <div className="container max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
               <p className="text-gaming-blue text-sm font-medium flex items-center justify-center">
                 <Star size={14} className="mr-1" /> Mistplay Rewards
@@ -427,7 +427,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {rewards.map((reward, index) => <RewardCard key={index} title={reward.title} description={reward.description} image={reward.image} glowColor={reward.glowColor} />)}
           </div>
           
@@ -445,9 +445,9 @@ const Index = () => {
         <div className="absolute bottom-40 -right-40 w-80 h-80 bg-gaming-purple/5 rounded-full blur-3xl"></div>
       </section>
       
-      <section className="py-20 bg-gaming-darker relative clip-path-slant">
+      <section className="py-16 bg-gaming-darker relative clip-path-slant">
         <div className="container max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
               Trusted by <span className="neon-text">Gamers</span> Worldwide
             </h2>
@@ -456,7 +456,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => <TestimonialCard key={index} name={testimonial.name} game={testimonial.game} avatar={testimonial.avatar} quote={testimonial.quote} stars={testimonial.stars} />)}
           </div>
           

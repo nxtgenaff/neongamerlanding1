@@ -25,14 +25,14 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
 
   return (
     <div 
-      className={`glass-panel transition-all duration-500 border rounded-2xl overflow-hidden ${
+      className={`glass-panel transition-all duration-500 border rounded-xl overflow-hidden h-[280px] ${
         isHovered ? glowStyles[glowColor] : 'border-white/5'
-      } ${isHovered ? 'transform -translate-y-2' : ''}`}
+      } ${isHovered ? 'transform -translate-y-1' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Top section for image */}
-      <div className="relative h-40 overflow-hidden bg-gaming-darker">
+      <div className="relative h-32 overflow-hidden bg-gaming-darker">
         <img 
           src={image} 
           alt={title} 
@@ -50,17 +50,17 @@ const RewardCard = ({ title, description, image, glowColor = 'blue' }: RewardCar
       <div className="w-full h-px bg-white/10"></div>
       
       {/* Bottom section for content */}
-      <div className="p-5">
-        <h3 className={`font-display font-bold text-xl mb-2 ${textStyles[glowColor]}`}>
+      <div className="p-4">
+        <h3 className={`font-display font-bold text-lg mb-1 ${textStyles[glowColor]}`}>
           {title}
         </h3>
-        <p className="text-sm text-white/70">
+        <p className="text-xs text-white/70 line-clamp-3">
           {description}
         </p>
         
-        <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
+        <div className="mt-3 pt-3 border-t border-white/10 flex justify-between items-center">
           <span className="text-xs text-white/50">Starting from</span>
-          <span className={`text-sm font-bold ${textStyles[glowColor]}`}>5,000 Units</span>
+          <span className={`text-xs font-bold ${textStyles[glowColor]}`}>5,000 Units</span>
         </div>
       </div>
     </div>
