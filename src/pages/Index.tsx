@@ -110,91 +110,12 @@ const Index = () => {
     link: "https://areyourealhuman.com/cl/i/6d4ow7"
   }];
   return <div className="min-h-screen bg-gaming-dark overflow-hidden">
-      <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 py-16 md:py-20 bg-hero-pattern">
-        <div className="absolute inset-0 bg-gaming-dark/30 backdrop-blur-[2px]"></div>
-        
-        <div className="container max-w-6xl mx-auto z-10">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div className="text-left" data-aos="fade-right">
-              <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
-                <p className="text-gaming-blue text-sm font-medium flex items-center">
-                  <Trophy size={14} className="mr-1" /> Mistplay: Play & Earn
-                </p>
-              </div>
-              
-              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4 text-white tracking-tight">
-                Get <span className="neon-text">Paid to Play</span> Your Favorite Mobile Games!
-              </h1>
-              
-              <p className="text-base md:text-lg text-white/80 mb-6 md:mb-8 max-w-xl">
-                Turn your gaming time into real rewards! Earn Units as you play and redeem them for gift cards, PayPal cash, and more.
-              </p>
-              
-              <div className="mb-6">
-                <CountdownTimer hours={23} minutes={59} seconds={59} />
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a href="https://areyourealhuman.com/cl/i/6d4ow7" className="cta-btn touch-target">
-                  START EARNING NOW <ArrowRight size={16} className="ml-2" />
-                </a>
-                <a href="#games" className="gaming-btn-outline touch-target">
-                  VIEW GAMES
-                </a>
-              </div>
-            </div>
-            
-            <div className="relative mt-8 md:mt-0 hidden md:block" data-aos="fade-left">
-              <div className="glass-panel p-4 sm:p-6 md:p-8 relative border border-white/5 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-neon-border animate-gradient-flow"></div>
-                <div className="flex items-center mb-6">
-                  <Gamepad size={28} className="text-gaming-blue mr-3" />
-                  <h3 className="font-display text-xl font-bold">Mistplay Rewards</h3>
-                </div>
-                
-                <div className="relative h-64 md:h-80 mb-4 overflow-hidden rounded-lg">
-                  <img src="/lovable-uploads/9d8e7357-5583-43f6-9e69-102cf9265fef.png" alt="Mistplay Rewards" className="object-cover w-full h-full transition-transform duration-700 ease-in-out hover:scale-105" />
-                </div>
-                
-                <div className="flex items-center justify-between bg-gaming-darker p-3 rounded-lg">
-                  <div className="flex items-center">
-                    <Diamond size={18} className="text-gaming-accent mr-2" />
-                    <span className="text-sm font-medium">Average Monthly Earnings</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-sm font-bold text-gaming-accent">$15-25</span>
-                  </div>
-                </div>
-                
-                <div className="mt-4 text-center">
-                  <p className="text-xs text-white/50 mb-2">New users joining today</p>
-                  <div className="w-full bg-gaming-darker rounded-full h-2">
-                    <div className="bg-gaming-blue h-2 rounded-full w-[78%]"></div>
-                  </div>
-                  <p className="text-xs text-white/70 mt-2">Registration bonus available! <span className="text-gaming-pink">+500 Units</span></p>
-                </div>
-              </div>
-              
-              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gaming-blue/20 rounded-full blur-3xl"></div>
-              <div className="absolute -top-6 -left-6 w-24 h-24 bg-gaming-purple/20 rounded-full blur-3xl"></div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-          
-          
-        </div>
-      </section>
+      
       
       <section id="games" className="py-20 relative">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-1 mb-4 rounded-full bg-gaming-blue/10 border border-gaming-blue/20">
-              <p className="text-gaming-blue text-sm font-medium flex items-center justify-center">
-                <Gamepad size={14} className="mr-1" /> Featured Mistplay Games
-              </p>
-            </div>
+            
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
               Play These <span className="neon-text">Top Games</span> to Earn More
             </h2>
@@ -363,9 +284,7 @@ const Index = () => {
         </div>}
       
       {showBanner && <div className="fixed top-0 left-0 w-full bg-gradient-to-r from-gaming-blue to-gaming-purple py-2 px-4 z-50 flex items-center justify-center">
-          <p className="text-sm text-black font-medium">
-            🔥 New User Bonus! Register today for 500 extra Units!
-          </p>
+          <p className="text-sm text-black font-medium">🔥download the last trending mobile gmaes for free</p>
           <button onClick={() => setShowBanner(false)} className="ml-4 text-black/70 hover:text-black">
             ✕
           </button>
